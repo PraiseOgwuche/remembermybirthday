@@ -58,7 +58,7 @@ struct WatchRootView: View {
                     }
                 }
             }
-            .navigationTitle("RMB")
+            .navigationTitle("Remember My Birthday")
         }
     }
 

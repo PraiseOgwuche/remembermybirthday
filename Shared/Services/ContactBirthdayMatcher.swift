@@ -1,7 +1,7 @@
 import Foundation
 import Contacts
 
-struct ContactMatchCandidate: Identifiable, Hashable {
+struct ContactMatchCandidate: Identifiable, Hashable, Sendable {
     let id: String
     let fullName: String
     let phoneNumber: String
@@ -10,7 +10,7 @@ struct ContactMatchCandidate: Identifiable, Hashable {
 }
 
 enum ContactBirthdayMatcher {
-    static func findMatches(for name: String, limit: Int = 5) -> [ContactMatchCandidate] {
+    nonisolated static func findMatches(for name: String, limit: Int = 5) -> [ContactMatchCandidate] {
         let store = CNContactStore()
         let status = CNContactStore.authorizationStatus(for: .contacts)
         let canReadContacts: Bool
@@ -106,7 +106,7 @@ enum ContactBirthdayMatcher {
         try store.execute(save)
     }
 
-    private static func preferredPhone(from contact: CNContact) -> String? {
+    nonisolated private static func preferredPhone(from contact: CNContact) -> String? {
         let numbers = contact.phoneNumbers
         guard !numbers.isEmpty else { return nil }
         let preferred = [CNLabelPhoneNumberiPhone, CNLabelPhoneNumberMobile, CNLabelPhoneNumberMain]

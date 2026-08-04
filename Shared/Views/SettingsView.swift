@@ -133,7 +133,7 @@ struct SettingsView: View {
         } header: {
             Text("Birthday prompts")
         } footer: {
-            Text("When Contacts are missing birthdays, Remember can ask — gently — so the list stays useful.")
+            Text("When Contacts are missing birthdays, Remember My Birthday can ask — gently — so the list stays useful.")
         }
     }
 
@@ -213,10 +213,10 @@ struct SettingsView: View {
 
     private var iCloudFooter: String {
         if !AppSettingsStore.hasICloudAccount {
-            return "Sign in to iCloud on this device to sync birthdays across iPhone, iPad, and Mac. Turn on, then fully quit and reopen Remember."
+            return "Sign in to iCloud on this device to sync birthdays across iPhone, iPad, and Mac. Turn on, then fully quit and reopen Remember My Birthday."
         }
         if iCloudSync {
-            return "Sync is on. Quit and reopen Remember once so the CloudKit store can start. Watch still uses the shared App Group when available."
+            return "Sync is on. Quit and reopen Remember My Birthday once so the CloudKit store can start. Watch still uses the shared App Group when available."
         }
         return "Keeps birthdays on this device only. Turn on to sync via your iCloud account (restart required)."
     }

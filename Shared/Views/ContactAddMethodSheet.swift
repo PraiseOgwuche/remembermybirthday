@@ -12,7 +12,7 @@ struct ContactAddMethodSheet: View {
                 Text("Add \(candidate.firstName)’s birthday")
                     .font(.title2.weight(.bold))
 
-                Text("We’ll save it in Remember and on their contact card.")
+                Text("We’ll save it in Remember My Birthday and on their contact card.")
                     .font(.body)
                     .foregroundStyle(.secondary)
 

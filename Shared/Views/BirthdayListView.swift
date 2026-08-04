@@ -62,7 +62,7 @@ struct BirthdayListView: View {
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(RememberColors.pageBackground.ignoresSafeArea())
-            .navigationTitle("RMB")
+            .navigationTitle("Remember My Birthday")
             #if os(iOS)
             .navigationBarTitleDisplayMode(.large)
             #endif
@@ -201,7 +201,7 @@ struct BirthdayListView: View {
                 if let candidate = contactPrompts.inAppPrompt {
                     Text(
                         candidate.reason == .newContact
-                            ? "Looks like a new contact. Want to save their birthday in Remember and on their card?"
+                            ? "Looks like a new contact. Want to save their birthday in Remember My Birthday and on their card?"
                             : "A quick one — add \(candidate.firstName)’s birthday so you don’t miss it later."
                     )
                 }
@@ -279,7 +279,7 @@ struct BirthdayListView: View {
                     VStack(alignment: .leading, spacing: 10) {
                         Text("Reminders are off")
                             .font(.headline)
-                        Text("Enable notifications so Remember can nudge you before birthdays — not after you’ve already missed them.")
+                        Text("Enable notifications so Remember My Birthday can nudge you before birthdays — not after you’ve already missed them.")
                             .font(.subheadline)
                             .foregroundStyle(.secondary)
                             .fixedSize(horizontal: false, vertical: true)

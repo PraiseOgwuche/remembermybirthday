@@ -2,7 +2,7 @@ import Foundation
 import Contacts
 import EventKit
 
-struct ImportedBirthday: Hashable, Identifiable {
+struct ImportedBirthday: Hashable, Identifiable, Sendable {
     var id: String { matchKey }
     let name: String
     let birthMonth: Int
@@ -47,7 +47,6 @@ final class BirthdayImporter: ObservableObject {
         calendarStatus = mapEventStatus(EKEventStore.authorizationStatus(for: .event))
     }
 
-    /// Requests Contacts + Calendar access, then returns unique birthdays found.
     func connectAndImport() async -> [ImportedBirthday] {
         statusMessage = nil
         refreshStatuses()
@@ -88,20 +87,32 @@ final class BirthdayImporter: ObservableObject {
             return []
         }
 
-        var results: [ImportedBirthday] = []
-        if contactsStatus == .allowed {
-            results.append(contentsOf: fetchFromContacts())
-        }
-        if calendarStatus == .allowed {
-            results.append(contentsOf: fetchFromCalendar())
-        }
+        let includeContacts = contactsStatus == .allowed
+        let includeCalendar = calendarStatus == .allowed
 
-        let merged = Self.dedupeImports(results)
-        lastImportCount = merged.count
-        return merged
+        let outcome = await Task.detached(priority: .userInitiated) {
+            var results: [ImportedBirthday] = []
+            var errorMessage: String?
+
+            if includeContacts {
+                let fetched = ContactsBirthdayReader.fetchBirthdays()
+                results.append(contentsOf: fetched.items)
+                if let error = fetched.errorMessage { errorMessage = error }
+            }
+            if includeCalendar {
+                results.append(contentsOf: CalendarBirthdayReader.fetchBirthdays())
+            }
+
+            return (Self.dedupeImports(results), errorMessage)
+        }.value
+
+        if let errorMessage = outcome.1 {
+            statusMessage = errorMessage
+        }
+        lastImportCount = outcome.0.count
+        return outcome.0
     }
 
-    /// Fills missing phone numbers on saved people by matching Contacts.
     @discardableResult
     func backfillPhoneNumbers(for people: [BirthdayPerson]) async -> Int {
         refreshStatuses()
@@ -115,34 +126,37 @@ final class BirthdayImporter: ObservableObject {
         }
         guard contactsStatus == .allowed else { return 0 }
 
-        let directory = buildPhoneDirectory()
-        var updated = 0
+        let snapshots = people.map {
+            PhoneBackfillTarget(
+                name: $0.name,
+                birthMonth: $0.birthMonth,
+                birthDay: $0.birthDay,
+                needsPhone: !$0.hasPhoneNumber
+            )
+        }
 
+        let phonesByKey = await Task.detached(priority: .utility) {
+            ContactsBirthdayReader.phoneMatches(for: snapshots)
+        }.value
+
+        var updated = 0
         for person in people where !person.hasPhoneNumber {
-            let key = BirthdayNameNormalizer.matchKey(
+            let birthdayKey = BirthdayNameNormalizer.matchKey(
                 name: person.name,
                 month: person.birthMonth,
                 day: person.birthDay
             )
-            if let phone = directory.byBirthdayKey[key], !phone.isEmpty {
-                person.phoneNumber = phone
-                person.updatedAt = Date()
-                updated += 1
-                continue
-            }
-
             let nameKey = BirthdayNameNormalizer.nameMatchKey(person.name)
-            if let phone = directory.byNameKey[nameKey], !phone.isEmpty {
+            if let phone = phonesByKey[birthdayKey] ?? phonesByKey[nameKey], !phone.isEmpty {
                 person.phoneNumber = phone
                 person.updatedAt = Date()
                 updated += 1
             }
         }
-
         return updated
     }
 
-    static func dedupeImports(_ results: [ImportedBirthday]) -> [ImportedBirthday] {
+    nonisolated static func dedupeImports(_ results: [ImportedBirthday]) -> [ImportedBirthday] {
         var unique: [String: ImportedBirthday] = [:]
 
         for item in results {
@@ -170,7 +184,7 @@ final class BirthdayImporter: ObservableObject {
         }
     }
 
-    private static func prefer(_ a: ImportedBirthday, _ b: ImportedBirthday) -> ImportedBirthday {
+    nonisolated private static func prefer(_ a: ImportedBirthday, _ b: ImportedBirthday) -> ImportedBirthday {
         if a.source.priority != b.source.priority {
             return a.source.priority > b.source.priority ? a : b
         }
@@ -186,142 +200,6 @@ final class BirthdayImporter: ObservableObject {
             return a.name.count < b.name.count ? a : b
         }
         return a
-    }
-
-    private func fetchFromContacts() -> [ImportedBirthday] {
-        let keys: [CNKeyDescriptor] = [
-            CNContactGivenNameKey as CNKeyDescriptor,
-            CNContactFamilyNameKey as CNKeyDescriptor,
-            CNContactNicknameKey as CNKeyDescriptor,
-            CNContactBirthdayKey as CNKeyDescriptor,
-            CNContactPhoneNumbersKey as CNKeyDescriptor
-        ]
-        let request = CNContactFetchRequest(keysToFetch: keys)
-        var output: [ImportedBirthday] = []
-
-        do {
-            try contactStore.enumerateContacts(with: request) { contact, _ in
-                guard let birthday = contact.birthday,
-                      let month = birthday.month,
-                      let day = birthday.day else { return }
-
-                guard let name = contactDisplayName(contact) else { return }
-
-                output.append(
-                    ImportedBirthday(
-                        name: BirthdayNameNormalizer.cleanDisplayName(name),
-                        birthMonth: month,
-                        birthDay: day,
-                        birthYear: birthday.year,
-                        phoneNumber: preferredPhone(from: contact) ?? "",
-                        source: .contacts
-                    )
-                )
-            }
-        } catch {
-            statusMessage = "Couldn’t read Contacts."
-        }
-        return output
-    }
-
-    private func fetchFromCalendar() -> [ImportedBirthday] {
-        let calendars = eventStore.calendars(for: .event)
-        let birthdayCalendars = calendars.filter {
-            $0.type == .birthday || $0.title.localizedCaseInsensitiveContains("birthday")
-        }
-        guard !birthdayCalendars.isEmpty else { return [] }
-
-        let start = Date()
-        guard let end = Calendar.current.date(byAdding: .year, value: 1, to: start) else { return [] }
-        let predicate = eventStore.predicateForEvents(withStart: start, end: end, calendars: birthdayCalendars)
-        let events = eventStore.events(matching: predicate)
-
-        return events.compactMap { event in
-            let title = event.title.trimmingCharacters(in: .whitespacesAndNewlines)
-            let cleaned = BirthdayNameNormalizer.cleanDisplayName(title)
-            guard !cleaned.isEmpty else { return nil }
-
-            let components = Calendar.current.dateComponents([.month, .day], from: event.startDate)
-            guard let month = components.month, let day = components.day else { return nil }
-
-            return ImportedBirthday(
-                name: cleaned,
-                birthMonth: month,
-                birthDay: day,
-                birthYear: nil,
-                phoneNumber: "",
-                source: .calendar
-            )
-        }
-    }
-
-    private struct PhoneDirectory {
-        var byBirthdayKey: [String: String] = [:]
-        var byNameKey: [String: String] = [:]
-    }
-
-    private func buildPhoneDirectory() -> PhoneDirectory {
-        let keys: [CNKeyDescriptor] = [
-            CNContactGivenNameKey as CNKeyDescriptor,
-            CNContactFamilyNameKey as CNKeyDescriptor,
-            CNContactNicknameKey as CNKeyDescriptor,
-            CNContactBirthdayKey as CNKeyDescriptor,
-            CNContactPhoneNumbersKey as CNKeyDescriptor
-        ]
-        let request = CNContactFetchRequest(keysToFetch: keys)
-        var directory = PhoneDirectory()
-
-        do {
-            try contactStore.enumerateContacts(with: request) { contact, _ in
-                guard let phone = preferredPhone(from: contact), !phone.isEmpty else { return }
-                guard let name = contactDisplayName(contact) else { return }
-                let cleaned = BirthdayNameNormalizer.cleanDisplayName(name)
-                let nameKey = BirthdayNameNormalizer.nameMatchKey(cleaned)
-                if directory.byNameKey[nameKey] == nil {
-                    directory.byNameKey[nameKey] = phone
-                }
-
-                if let birthday = contact.birthday,
-                   let month = birthday.month,
-                   let day = birthday.day {
-                    let key = BirthdayNameNormalizer.matchKey(name: cleaned, month: month, day: day)
-                    directory.byBirthdayKey[key] = phone
-                }
-            }
-        } catch {
-            statusMessage = "Couldn’t read Contacts for phone numbers."
-        }
-
-        return directory
-    }
-
-    private func contactDisplayName(_ contact: CNContact) -> String? {
-        let given = contact.givenName.trimmingCharacters(in: .whitespacesAndNewlines)
-        let family = contact.familyName.trimmingCharacters(in: .whitespacesAndNewlines)
-        let nickname = contact.nickname.trimmingCharacters(in: .whitespacesAndNewlines)
-        if !given.isEmpty || !family.isEmpty {
-            return [given, family].filter { !$0.isEmpty }.joined(separator: " ")
-        }
-        if !nickname.isEmpty { return nickname }
-        return nil
-    }
-
-    private func preferredPhone(from contact: CNContact) -> String? {
-        let numbers = contact.phoneNumbers
-        guard !numbers.isEmpty else { return nil }
-
-        let preferredLabels: [String] = [
-            CNLabelPhoneNumberiPhone,
-            CNLabelPhoneNumberMobile,
-            CNLabelPhoneNumberMain
-        ]
-
-        for label in preferredLabels {
-            if let match = numbers.first(where: { $0.label == label }) {
-                return match.value.stringValue
-            }
-        }
-        return numbers.first?.value.stringValue
     }
 
     private func mapContactsStatus(_ status: CNAuthorizationStatus) -> AccessStatus {
@@ -349,6 +227,164 @@ final class BirthdayImporter: ObservableObject {
         case .denied, .restricted: return .denied
         case .notDetermined: return .notDetermined
         @unknown default: return .denied
+        }
+    }
+}
+
+struct PhoneBackfillTarget: Sendable {
+    let name: String
+    let birthMonth: Int
+    let birthDay: Int
+    let needsPhone: Bool
+}
+
+enum ContactsBirthdayReader {
+    struct FetchResult: Sendable {
+        var items: [ImportedBirthday]
+        var errorMessage: String?
+    }
+
+    nonisolated static func fetchBirthdays() -> FetchResult {
+        let store = CNContactStore()
+        let keys: [CNKeyDescriptor] = [
+            CNContactGivenNameKey as CNKeyDescriptor,
+            CNContactFamilyNameKey as CNKeyDescriptor,
+            CNContactNicknameKey as CNKeyDescriptor,
+            CNContactBirthdayKey as CNKeyDescriptor,
+            CNContactPhoneNumbersKey as CNKeyDescriptor
+        ]
+        let request = CNContactFetchRequest(keysToFetch: keys)
+        var output: [ImportedBirthday] = []
+
+        do {
+            try store.enumerateContacts(with: request) { contact, _ in
+                guard let birthday = contact.birthday,
+                      let month = birthday.month,
+                      let day = birthday.day else { return }
+                guard let name = displayName(contact) else { return }
+
+                output.append(
+                    ImportedBirthday(
+                        name: BirthdayNameNormalizer.cleanDisplayName(name),
+                        birthMonth: month,
+                        birthDay: day,
+                        birthYear: birthday.year,
+                        phoneNumber: preferredPhone(from: contact) ?? "",
+                        source: .contacts
+                    )
+                )
+            }
+            return FetchResult(items: output, errorMessage: nil)
+        } catch {
+            return FetchResult(items: output, errorMessage: "Couldn’t read Contacts.")
+        }
+    }
+
+    /// Returns phones keyed by birthday match key and name match key.
+    nonisolated static func phoneMatches(for targets: [PhoneBackfillTarget]) -> [String: String] {
+        let needed = targets.filter(\.needsPhone)
+        guard !needed.isEmpty else { return [:] }
+
+        let store = CNContactStore()
+        let keys: [CNKeyDescriptor] = [
+            CNContactGivenNameKey as CNKeyDescriptor,
+            CNContactFamilyNameKey as CNKeyDescriptor,
+            CNContactNicknameKey as CNKeyDescriptor,
+            CNContactBirthdayKey as CNKeyDescriptor,
+            CNContactPhoneNumbersKey as CNKeyDescriptor
+        ]
+        let request = CNContactFetchRequest(keysToFetch: keys)
+        var byBirthdayKey: [String: String] = [:]
+        var byNameKey: [String: String] = [:]
+
+        do {
+            try store.enumerateContacts(with: request) { contact, _ in
+                guard let phone = preferredPhone(from: contact), !phone.isEmpty else { return }
+                guard let name = displayName(contact) else { return }
+                let cleaned = BirthdayNameNormalizer.cleanDisplayName(name)
+                let nameKey = BirthdayNameNormalizer.nameMatchKey(cleaned)
+                if byNameKey[nameKey] == nil {
+                    byNameKey[nameKey] = phone
+                }
+                if let birthday = contact.birthday,
+                   let month = birthday.month,
+                   let day = birthday.day {
+                    let key = BirthdayNameNormalizer.matchKey(name: cleaned, month: month, day: day)
+                    byBirthdayKey[key] = phone
+                }
+            }
+        } catch {
+            return [:]
+        }
+
+        var matched: [String: String] = [:]
+        for target in needed {
+            let birthdayKey = BirthdayNameNormalizer.matchKey(
+                name: target.name,
+                month: target.birthMonth,
+                day: target.birthDay
+            )
+            let nameKey = BirthdayNameNormalizer.nameMatchKey(target.name)
+            if let phone = byBirthdayKey[birthdayKey] ?? byNameKey[nameKey] {
+                matched[birthdayKey] = phone
+                matched[nameKey] = phone
+            }
+        }
+        return matched
+    }
+
+    nonisolated private static func displayName(_ contact: CNContact) -> String? {
+        let given = contact.givenName.trimmingCharacters(in: .whitespacesAndNewlines)
+        let family = contact.familyName.trimmingCharacters(in: .whitespacesAndNewlines)
+        let nickname = contact.nickname.trimmingCharacters(in: .whitespacesAndNewlines)
+        if !given.isEmpty || !family.isEmpty {
+            return [given, family].filter { !$0.isEmpty }.joined(separator: " ")
+        }
+        if !nickname.isEmpty { return nickname }
+        return nil
+    }
+
+    nonisolated private static func preferredPhone(from contact: CNContact) -> String? {
+        let numbers = contact.phoneNumbers
+        guard !numbers.isEmpty else { return nil }
+        let preferredLabels = [CNLabelPhoneNumberiPhone, CNLabelPhoneNumberMobile, CNLabelPhoneNumberMain]
+        for label in preferredLabels {
+            if let match = numbers.first(where: { $0.label == label }) {
+                return match.value.stringValue
+            }
+        }
+        return numbers.first?.value.stringValue
+    }
+}
+
+enum CalendarBirthdayReader {
+    nonisolated static func fetchBirthdays() -> [ImportedBirthday] {
+        let eventStore = EKEventStore()
+        let calendars = eventStore.calendars(for: .event)
+        let birthdayCalendars = calendars.filter {
+            $0.type == .birthday || $0.title.localizedCaseInsensitiveContains("birthday")
+        }
+        guard !birthdayCalendars.isEmpty else { return [] }
+
+        let start = Date()
+        guard let end = Calendar.current.date(byAdding: .year, value: 1, to: start) else { return [] }
+        let predicate = eventStore.predicateForEvents(withStart: start, end: end, calendars: birthdayCalendars)
+        let events = eventStore.events(matching: predicate)
+
+        return events.compactMap { event in
+            let title = event.title.trimmingCharacters(in: .whitespacesAndNewlines)
+            let cleaned = BirthdayNameNormalizer.cleanDisplayName(title)
+            guard !cleaned.isEmpty else { return nil }
+            let components = Calendar.current.dateComponents([.month, .day], from: event.startDate)
+            guard let month = components.month, let day = components.day else { return nil }
+            return ImportedBirthday(
+                name: cleaned,
+                birthMonth: month,
+                birthDay: day,
+                birthYear: nil,
+                phoneNumber: "",
+                source: .calendar
+            )
         }
     }
 }

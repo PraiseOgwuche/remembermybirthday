@@ -51,7 +51,7 @@ targets:
     info:
       path: Platforms/iOS/Resources/Info.plist
       properties:
-        CFBundleDisplayName: RMB
+        CFBundleDisplayName: Remember My Birthday
         LSRequiresIPhoneOS: true
         UILaunchScreen: {}
         UIRequiresFullScreen: true
@@ -87,7 +87,7 @@ targets:
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.remembermybirthday.app
-        PRODUCT_NAME: Remember
+        PRODUCT_NAME: RememberMyBirthday
         TARGETED_DEVICE_FAMILY: "1,2"
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         GENERATE_INFOPLIST_FILE: false
@@ -113,7 +113,9 @@ targets:
     info:
       path: Platforms/iOS/Widget/Info.plist
       properties:
-        CFBundleDisplayName: RMB
+        CFBundleDisplayName: Remember My Birthday
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.widgetkit-extension
     entitlements:
       path: Platforms/iOS/Widget/RememberWidget.entitlements
       properties:
@@ -142,6 +144,7 @@ targets:
     info:
       path: Platforms/Mac/Resources/Info.plist
       properties:
+        CFBundleDisplayName: Remember My Birthday
         NSContactsUsageDescription: Remember My Birthday imports birthdays saved on contact cards so you can get reminders without typing them in.
         NSCalendarsUsageDescription: Remember My Birthday reads birthday events from your calendar to set up reminders automatically.
         NSCalendarsFullAccessUsageDescription: Remember My Birthday reads birthday events from your calendar to set up reminders automatically.
@@ -161,7 +164,7 @@ targets:
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.remembermybirthday.app.mac
-        PRODUCT_NAME: Remember
+        PRODUCT_NAME: RememberMyBirthday
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         GENERATE_INFOPLIST_FILE: false
         CODE_SIGN_ENTITLEMENTS: Platforms/Mac/Resources/Remember.entitlements
@@ -201,7 +204,7 @@ targets:
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.remembermybirthday.app.watchkitapp
-        PRODUCT_NAME: Remember Watch
+        PRODUCT_NAME: RememberMyBirthday Watch
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         GENERATE_INFOPLIST_FILE: false
         CODE_SIGN_ENTITLEMENTS: Platforms/Watch/Resources/RememberWatch.entitlements

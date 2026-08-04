@@ -90,7 +90,7 @@ struct OnboardingFlowView: View {
                 VStack(alignment: .leading, spacing: 28) {
                     header(
                         title: "Connect your birthdays",
-                        subtitle: "Remember can pull birthdays already saved in Contacts and your Birthday calendar — so you don’t start from scratch."
+                        subtitle: "Remember My Birthday can pull birthdays already saved in Contacts and your Birthday calendar — so you don’t start from scratch."
                     )
 
                     VStack(spacing: 12) {
@@ -144,7 +144,7 @@ struct OnboardingFlowView: View {
                         title: imported.isEmpty ? "No birthdays found" : "Found \(imported.count) birthdays",
                         subtitle: imported.isEmpty
                             ? "That’s common — many people never fill birthdays into Contacts. Add a few important ones next."
-                            : "These will be saved to Remember with reminders. You can edit or remove anyone later."
+                            : "These will be saved to Remember My Birthday with reminders. You can edit or remove anyone later."
                     )
 
                     if !imported.isEmpty {
@@ -329,7 +329,7 @@ struct OnboardingFlowView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 24) {
                     header(
-                        title: "Put RMB on your Home Screen",
+                        title: "Add Remember My Birthday to Home Screen",
                         subtitle: "Apple won’t let apps add a widget for you — but once it’s there, the next birthday, draft, and Send are one tap away."
                     )
 
@@ -358,7 +358,7 @@ struct OnboardingFlowView: View {
                     VStack(alignment: .leading, spacing: 10) {
                         howToRow(number: "1", text: "Long-press an empty spot on your Home Screen")
                         howToRow(number: "2", text: "Tap Edit → Add Widget")
-                        howToRow(number: "3", text: "Search “RMB” or “Remember My Birthday” and choose \(preferredWidgetSize.title)")
+                        howToRow(number: "3", text: "Search “Remember My Birthday” and choose \(preferredWidgetSize.title)")
                     }
                 }
                 .padding(24)
@@ -392,12 +392,12 @@ struct OnboardingFlowView: View {
                     Text("Add the \(preferredWidgetSize.title.lowercased()) widget")
                         .font(.title2.weight(.bold))
 
-                    Text("Keep Remember open in App Switcher if you want, then:")
+                    Text("Keep Remember My Birthday open in App Switcher if you want, then:")
                         .foregroundStyle(.secondary)
 
                     howToRow(number: "1", text: "Go to your Home Screen and long-press a blank area until the icons jiggle")
                     howToRow(number: "2", text: "Tap Edit (top left) → Add Widget")
-                    howToRow(number: "3", text: "Search for RMB or Remember My Birthday")
+                    howToRow(number: "3", text: "Search for Remember My Birthday")
                     howToRow(number: "4", text: "Swipe to \(preferredWidgetSize.title), then tap Add Widget")
 
                     Text("You’ll see the next birthday, a draft message, and Send / Schedule right on the Home Screen.")

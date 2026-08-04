@@ -724,7 +724,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.remembermybirthday.app;
-				PRODUCT_NAME = Remember;
+				PRODUCT_NAME = RememberMyBirthday;
 				SDKROOT = iphoneos;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -830,7 +830,7 @@
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = Platforms/Watch/Resources/Info.plist;
 				PRODUCT_BUNDLE_IDENTIFIER = com.remembermybirthday.app.watchkitapp;
-				PRODUCT_NAME = "Remember Watch";
+				PRODUCT_NAME = "RememberMyBirthday Watch";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;
@@ -845,7 +845,7 @@
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = Platforms/Watch/Resources/Info.plist;
 				PRODUCT_BUNDLE_IDENTIFIER = com.remembermybirthday.app.watchkitapp;
-				PRODUCT_NAME = "Remember Watch";
+				PRODUCT_NAME = "RememberMyBirthday Watch";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;
@@ -871,7 +871,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.remembermybirthday.app;
-				PRODUCT_NAME = Remember;
+				PRODUCT_NAME = RememberMyBirthday;
 				SDKROOT = iphoneos;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -889,7 +889,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.remembermybirthday.app.mac;
-				PRODUCT_NAME = Remember;
+				PRODUCT_NAME = RememberMyBirthday;
 				SDKROOT = macosx;
 			};
 			name = Debug;
@@ -905,7 +905,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.remembermybirthday.app.mac;
-				PRODUCT_NAME = Remember;
+				PRODUCT_NAME = RememberMyBirthday;
 				SDKROOT = macosx;
 			};
 			name = Release;

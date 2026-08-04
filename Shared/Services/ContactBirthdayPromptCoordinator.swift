@@ -3,8 +3,8 @@ import Contacts
 import UserNotifications
 import Combine
 
-struct ContactPromptCandidate: Identifiable, Hashable {
-    enum Reason: String {
+struct ContactPromptCandidate: Identifiable, Hashable, Sendable {
+    enum Reason: String, Sendable {
         case newContact
         case engagement
     }
@@ -80,7 +80,17 @@ final class ContactBirthdayPromptCoordinator: ObservableObject {
 
         ContactBirthdayPromptStore.markActive()
 
-        let eligible = Self.eligibleContacts(excludingPeople: people)
+        let trackedIds = Set(people.map(\.contactIdentifier).filter { !$0.isEmpty })
+        let trackedNames = Set(people.map { BirthdayNameNormalizer.nameMatchKey($0.name) })
+        let dismissed = ContactBirthdayPromptStore.dismissedContactIds
+
+        let eligible = await Task.detached(priority: .utility) {
+            Self.eligibleContacts(
+                dismissed: dismissed,
+                trackedIds: trackedIds,
+                trackedNames: trackedNames
+            )
+        }.value
         let known = ContactBirthdayPromptStore.knownContactIds
 
         // First scan: learn the address book without treating everyone as “new”.
@@ -205,7 +215,7 @@ final class ContactBirthdayPromptCoordinator: ObservableObject {
         content.title = candidate.reason == .newContact
             ? "New contact · \(candidate.firstName)"
             : "Quick one · \(candidate.firstName)"
-        content.body = "Want to add \(candidate.firstName)’s birthday? We’ll save it in Remember and on their contact card."
+        content.body = "Want to add \(candidate.firstName)’s birthday? We’ll save it in Remember My Birthday and on their contact card."
         content.sound = .default
         content.categoryIdentifier = ContactPromptAction.categoryId
         content.userInfo = [
@@ -230,7 +240,7 @@ final class ContactBirthdayPromptCoordinator: ObservableObject {
         guard let pick = eligible.randomElement() else { return }
 
         let content = UNMutableNotificationContent()
-        content.title = "Remember \(pick.firstName)?"
+        content.title = "Remember My Birthday · \(pick.firstName)"
         content.body = "It’s been a bit — want to add \(pick.firstName)’s birthday so you don’t miss it?"
         content.sound = .default
         content.categoryIdentifier = ContactPromptAction.categoryId
@@ -256,7 +266,11 @@ final class ContactBirthdayPromptCoordinator: ObservableObject {
         "contact.prompt.\(contactId)"
     }
 
-    static func eligibleContacts(excludingPeople people: [BirthdayPerson]) -> [ContactPromptCandidate] {
+    nonisolated static func eligibleContacts(
+        dismissed: Set<String>,
+        trackedIds: Set<String>,
+        trackedNames: Set<String>
+    ) -> [ContactPromptCandidate] {
         let store = CNContactStore()
         let status = CNContactStore.authorizationStatus(for: .contacts)
         let canRead: Bool
@@ -270,10 +284,6 @@ final class ContactBirthdayPromptCoordinator: ObservableObject {
         canRead = status == .authorized
         #endif
         guard canRead else { return [] }
-
-        let dismissed = ContactBirthdayPromptStore.dismissedContactIds
-        let trackedIds = Set(people.map(\.contactIdentifier).filter { !$0.isEmpty })
-        let trackedNames = Set(people.map { BirthdayNameNormalizer.nameMatchKey($0.name) })
 
         let keys: [CNKeyDescriptor] = [
             CNContactIdentifierKey as CNKeyDescriptor,
@@ -321,7 +331,6 @@ final class ContactBirthdayPromptCoordinator: ObservableObject {
             return []
         }
 
-        // Prefer people we can message.
         return results.sorted { lhs, rhs in
             let l = lhs.phoneNumber.isEmpty ? 0 : 1
             let r = rhs.phoneNumber.isEmpty ? 0 : 1
@@ -330,7 +339,7 @@ final class ContactBirthdayPromptCoordinator: ObservableObject {
         }
     }
 
-    private static func preferredPhone(from contact: CNContact) -> String? {
+    nonisolated private static func preferredPhone(from contact: CNContact) -> String? {
         let numbers = contact.phoneNumbers
         guard !numbers.isEmpty else { return nil }
         let preferred = [CNLabelPhoneNumberiPhone, CNLabelPhoneNumberMobile, CNLabelPhoneNumberMain]

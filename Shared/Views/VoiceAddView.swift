@@ -136,7 +136,7 @@ struct VoiceAddView: View {
             }
 
             Button("Continue") {
-                processTranscript(capture.transcript)
+                Task { await processTranscript(capture.transcript) }
             }
             .font(.body.weight(.semibold))
             .disabled(capture.transcript.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
@@ -218,7 +218,7 @@ struct VoiceAddView: View {
                 }
             } else {
                 Section {
-                    Text("No close Contacts match. We’ll add them as new in Remember.")
+                    Text("No close Contacts match. We’ll add them as new in Remember My Birthday.")
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
                 }
@@ -247,7 +247,7 @@ struct VoiceAddView: View {
                 .foregroundStyle(Color.accentColor)
             Text("Saved")
                 .font(.title2.weight(.bold))
-            Text(statusMessage ?? "They’re in Remember now.")
+            Text(statusMessage ?? "They’re in Remember My Birthday now.")
                 .font(.body)
                 .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)
@@ -274,7 +274,7 @@ struct VoiceAddView: View {
     }
     #endif
 
-    private func processTranscript(_ text: String) {
+    private func processTranscript(_ text: String) async {
         #if os(iOS)
         capture.stop()
         #endif
@@ -292,8 +292,11 @@ struct VoiceAddView: View {
         } else {
             manualName = parse.name ?? ""
             if let name = parse.name, !name.isEmpty {
-                candidates = ContactBirthdayMatcher.findMatches(for: name)
-                selectedCandidate = candidates.first
+                let matches = await Task.detached(priority: .userInitiated) {
+                    ContactBirthdayMatcher.findMatches(for: name)
+                }.value
+                candidates = matches
+                selectedCandidate = matches.first
             } else {
                 candidates = []
                 selectedCandidate = nil
@@ -361,7 +364,7 @@ struct VoiceAddView: View {
                     year: year
                 )
             } catch {
-                statusMessage = "Saved in Remember, but couldn’t update Contacts: \(error.localizedDescription)"
+                statusMessage = "Saved in Remember My Birthday, but couldn’t update Contacts: \(error.localizedDescription)"
             }
         }
 

@@ -51,7 +51,7 @@ struct AddEditBirthdayView: View {
                     #endif
                     .textContentType(.telephoneNumber)
             } footer: {
-                Text("Phone lets Remember open Messages to them with your draft ready. Nickname is what you’ll see in reminders.")
+                Text("Phone lets Remember My Birthday open Messages to them with your draft ready. Nickname is what you’ll see in reminders.")
             }
 
             Section("Birthday") {
@@ -70,7 +70,7 @@ struct AddEditBirthdayView: View {
                 Section {
                     Toggle("Also update Contacts birthday", isOn: $updateContactBirthday)
                 } footer: {
-                    Text("Keeps their contact card in sync with Remember.")
+                    Text("Keeps their contact card in sync with Remember My Birthday.")
                 }
             }
 
@@ -201,7 +201,7 @@ struct AddEditBirthdayView: View {
                         year: year
                     )
                 } catch {
-                    saveError = "Saved in Remember, but couldn’t update Contacts: \(error.localizedDescription)"
+                    saveError = "Saved in Remember My Birthday, but couldn’t update Contacts: \(error.localizedDescription)"
                 }
             }
 

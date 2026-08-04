@@ -72,7 +72,7 @@ struct RememberWidgetEntryView: View {
 
     private var emptyView: some View {
         VStack(alignment: .leading, spacing: 6) {
-            Text("RMB")
+            Text("Remember My Birthday")
                 .font(.headline)
             Text("Add birthdays in the app to see who’s next.")
                 .font(.caption)
