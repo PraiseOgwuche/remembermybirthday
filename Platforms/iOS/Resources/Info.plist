@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>CFBundleDisplayName</key>
+	<string>RMB</string>
+	<key>CFBundleExecutable</key>
+	<string>$(EXECUTABLE_NAME)</string>
+	<key>CFBundleIdentifier</key>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>$(PRODUCT_NAME)</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.0</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>com.remembermybirthday.app</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>remembermybirthday</string>
+			</array>
+		</dict>
+	</array>
+	<key>CFBundleVersion</key>
+	<string>1</string>
+	<key>LSRequiresIPhoneOS</key>
+	<true/>
+	<key>NSCalendarsFullAccessUsageDescription</key>
+	<string>Remember My Birthday reads birthday events from your calendar to set up reminders automatically.</string>
+	<key>NSCalendarsUsageDescription</key>
+	<string>Remember My Birthday reads birthday events from your calendar to set up reminders automatically.</string>
+	<key>NSContactsUsageDescription</key>
+	<string>Remember My Birthday imports birthdays and phone numbers from Contacts, can nudge you when someone is missing a birthday, and can save a birthday back onto a contact card.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Remember My Birthday uses the microphone so you can add birthdays by voice.</string>
+	<key>NSRemindersFullAccessUsageDescription</key>
+	<string>Remember My Birthday can create reminders so birthday alerts show up where you already look.</string>
+	<key>NSRemindersUsageDescription</key>
+	<string>Remember My Birthday can create reminders so birthday alerts show up where you already look.</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>Remember My Birthday uses speech recognition so you can add a birthday by saying a name and date.</string>
+	<key>UILaunchScreen</key>
+	<dict/>
+	<key>UIRequiresFullScreen</key>
+	<true/>
+	<key>UISupportedInterfaceOrientations</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+	</array>
+	<key>UISupportedInterfaceOrientations~ipad</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationPortraitUpsideDown</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+</dict>
+</plist>

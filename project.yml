@@ -1,0 +1,209 @@
+name: Remember
+options:
+  bundleIdPrefix: com.remembermybirthday
+  deploymentTarget:
+    iOS: "17.0"
+    macOS: "14.0"
+    watchOS: "10.0"
+  xcodeVersion: "16.0"
+  createIntermediateGroups: true
+  groupSortPosition: top
+settings:
+  base:
+    SWIFT_VERSION: "5.0"
+    CODE_SIGN_STYLE: Automatic
+    DEVELOPMENT_TEAM: ""
+    CURRENT_PROJECT_VERSION: "1"
+    MARKETING_VERSION: "1.0"
+schemes:
+  Remember:
+    build:
+      targets:
+        Remember: all
+        RememberWidget: all
+    run:
+      config: Debug
+  RememberMac:
+    build:
+      targets:
+        RememberMac: all
+    run:
+      config: Debug
+  RememberWatch:
+    build:
+      targets:
+        RememberWatch: all
+    run:
+      config: Debug
+targets:
+  Remember:
+    type: application
+    platform: iOS
+    sources:
+      - path: Shared
+        excludes:
+          - "**/Watch/**"
+      - path: Platforms/iOS
+        excludes:
+          - Widget/**
+    resources:
+      - path: Platforms/iOS/Resources/Assets.xcassets
+    info:
+      path: Platforms/iOS/Resources/Info.plist
+      properties:
+        CFBundleDisplayName: RMB
+        LSRequiresIPhoneOS: true
+        UILaunchScreen: {}
+        UIRequiresFullScreen: true
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationPortrait
+        UISupportedInterfaceOrientations~ipad:
+          - UIInterfaceOrientationPortrait
+          - UIInterfaceOrientationPortraitUpsideDown
+          - UIInterfaceOrientationLandscapeLeft
+          - UIInterfaceOrientationLandscapeRight
+        CFBundleURLTypes:
+          - CFBundleURLName: com.remembermybirthday.app
+            CFBundleURLSchemes:
+              - remembermybirthday
+        NSContactsUsageDescription: Remember My Birthday imports birthdays and phone numbers from Contacts, can nudge you when someone is missing a birthday, and can save a birthday back onto a contact card.
+        NSCalendarsUsageDescription: Remember My Birthday reads birthday events from your calendar to set up reminders automatically.
+        NSCalendarsFullAccessUsageDescription: Remember My Birthday reads birthday events from your calendar to set up reminders automatically.
+        NSRemindersFullAccessUsageDescription: Remember My Birthday can create reminders so birthday alerts show up where you already look.
+        NSRemindersUsageDescription: Remember My Birthday can create reminders so birthday alerts show up where you already look.
+        NSSpeechRecognitionUsageDescription: Remember My Birthday uses speech recognition so you can add a birthday by saying a name and date.
+        NSMicrophoneUsageDescription: Remember My Birthday uses the microphone so you can add birthdays by voice.
+    entitlements:
+      path: Platforms/iOS/Resources/Remember.entitlements
+      properties:
+        com.apple.developer.applesignin:
+          - Default
+        com.apple.security.application-groups:
+          - group.com.remembermybirthday.app
+        com.apple.developer.icloud-container-identifiers:
+          - iCloud.com.remembermybirthday.app
+        com.apple.developer.icloud-services:
+          - CloudKit
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.remembermybirthday.app
+        PRODUCT_NAME: Remember
+        TARGETED_DEVICE_FAMILY: "1,2"
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        GENERATE_INFOPLIST_FILE: false
+        CODE_SIGN_ENTITLEMENTS: Platforms/iOS/Resources/Remember.entitlements
+        SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD: false
+        INFOPLIST_KEY_UIRequiresFullScreen: YES
+        INFOPLIST_KEY_NSContactsUsageDescription: Remember My Birthday imports birthdays and phone numbers from Contacts, can nudge you when someone is missing a birthday, and can save a birthday back onto a contact card.
+        INFOPLIST_KEY_NSCalendarsUsageDescription: Remember My Birthday reads birthday events from your calendar to set up reminders automatically.
+        INFOPLIST_KEY_NSCalendarsFullAccessUsageDescription: Remember My Birthday reads birthday events from your calendar to set up reminders automatically.
+        INFOPLIST_KEY_NSSpeechRecognitionUsageDescription: Remember My Birthday uses speech recognition so you can add a birthday by saying a name and date.
+        INFOPLIST_KEY_NSMicrophoneUsageDescription: Remember My Birthday uses the microphone so you can add birthdays by voice.
+    dependencies:
+      - target: RememberWidget
+        embed: true
+
+  RememberWidget:
+    type: app-extension
+    platform: iOS
+    sources:
+      - path: Platforms/iOS/Widget
+      - path: Shared/Services/WidgetSnapshotStore.swift
+      - path: Shared/Services/RememberDeepLink.swift
+    info:
+      path: Platforms/iOS/Widget/Info.plist
+      properties:
+        CFBundleDisplayName: RMB
+    entitlements:
+      path: Platforms/iOS/Widget/RememberWidget.entitlements
+      properties:
+        com.apple.security.application-groups:
+          - group.com.remembermybirthday.app
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.remembermybirthday.app.widget
+        PRODUCT_NAME: RememberWidget
+        TARGETED_DEVICE_FAMILY: "1,2"
+        GENERATE_INFOPLIST_FILE: false
+        CODE_SIGN_ENTITLEMENTS: Platforms/iOS/Widget/RememberWidget.entitlements
+        LD_RUNPATH_SEARCH_PATHS: "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks"
+        SKIP_INSTALL: true
+
+  RememberMac:
+    type: application
+    platform: macOS
+    sources:
+      - path: Shared
+        excludes:
+          - "**/Watch/**"
+      - path: Platforms/Mac
+    resources:
+      - path: Platforms/Mac/Resources/Assets.xcassets
+    info:
+      path: Platforms/Mac/Resources/Info.plist
+      properties:
+        NSContactsUsageDescription: Remember My Birthday imports birthdays saved on contact cards so you can get reminders without typing them in.
+        NSCalendarsUsageDescription: Remember My Birthday reads birthday events from your calendar to set up reminders automatically.
+        NSCalendarsFullAccessUsageDescription: Remember My Birthday reads birthday events from your calendar to set up reminders automatically.
+    entitlements:
+      path: Platforms/Mac/Resources/Remember.entitlements
+      properties:
+        com.apple.developer.applesignin:
+          - Default
+        com.apple.security.app-sandbox: true
+        com.apple.security.network.client: true
+        com.apple.security.application-groups:
+          - group.com.remembermybirthday.app
+        com.apple.developer.icloud-container-identifiers:
+          - iCloud.com.remembermybirthday.app
+        com.apple.developer.icloud-services:
+          - CloudKit
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.remembermybirthday.app.mac
+        PRODUCT_NAME: Remember
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        GENERATE_INFOPLIST_FILE: false
+        CODE_SIGN_ENTITLEMENTS: Platforms/Mac/Resources/Remember.entitlements
+        MACOSX_DEPLOYMENT_TARGET: "14.0"
+        LD_RUNPATH_SEARCH_PATHS: "$(inherited) @executable_path/../Frameworks"
+
+  RememberWatch:
+    type: application
+    platform: watchOS
+    sources:
+      - path: Shared/Models
+      - path: Shared/Services
+        excludes:
+          - BirthdayImporter.swift
+          - BirthdayStoreCleanup.swift
+          - BirthdayMessageComposer.swift
+          - MessageDeepLinkRouter.swift
+          - BirthdaySpeechParser.swift
+          - ContactBirthdayMatcher.swift
+          - VoiceBirthdayCapture.swift
+          - ContactBirthdayPromptStore.swift
+          - ContactBirthdayPromptCoordinator.swift
+          - WidgetSnapshotPublisher.swift
+          - AuthManager.swift
+      - path: Shared/Views/Watch
+      - path: Shared/Theme
+      - path: Platforms/Watch
+    resources:
+      - path: Platforms/Watch/Resources/Assets.xcassets
+    info:
+      path: Platforms/Watch/Resources/Info.plist
+    entitlements:
+      path: Platforms/Watch/Resources/RememberWatch.entitlements
+      properties:
+        com.apple.security.application-groups:
+          - group.com.remembermybirthday.app
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.remembermybirthday.app.watchkitapp
+        PRODUCT_NAME: Remember Watch
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        GENERATE_INFOPLIST_FILE: false
+        CODE_SIGN_ENTITLEMENTS: Platforms/Watch/Resources/RememberWatch.entitlements
+        TARGETED_DEVICE_FAMILY: "4"
+        SDKROOT: watchos
