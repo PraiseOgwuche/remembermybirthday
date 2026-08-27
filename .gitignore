@@ -6,3 +6,7 @@ build/
 xcuserdata/
 *.xcodeproj/project.xcworkspace/xcuserdata/
 .idea/
+.env
+backend/.env
+backend/node_modules/
+**/.env.local

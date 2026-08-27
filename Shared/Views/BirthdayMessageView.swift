@@ -175,7 +175,10 @@ struct BirthdayMessageView: View {
         #endif
         .onAppear {
             if draft.isEmpty {
-                if !person.savedDraft.isEmpty {
+                let aiKey = "companion.ai.draft.\(person.id.uuidString)"
+                if let aiDraft = UserDefaults.standard.string(forKey: aiKey), !aiDraft.isEmpty {
+                    draft = aiDraft
+                } else if !person.savedDraft.isEmpty {
                     draft = person.savedDraft
                 } else {
                     draft = BirthdayMessageComposer.draft(for: person, tone: tone, variant: variant)

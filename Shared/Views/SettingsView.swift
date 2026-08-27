@@ -15,8 +15,21 @@ struct SettingsView: View {
     @State private var nudgeDelayDays = AppSettingsStore.promptNudgeDelayDays
     @State private var softEngage = AppSettingsStore.softEngageEnabled
     @State private var iCloudSync = AppSettingsStore.iCloudSyncEnabled
+    @State private var aiEnabled = AppSettingsStore.aiEnabled
+    @State private var aiProvider = AppSettingsStore.aiProvider
+    #if DEBUG
+    @State private var anthropicKey = AISecrets.anthropicAPIKey ?? ""
+    @State private var backendURL = AppSettingsStore.companionBackendURL
+    @State private var showAPIKey = false
+    #endif
+    @State private var notificationEmail = AppSettingsStore.notificationEmail
+    @State private var emailAccountEvents = AppSettingsStore.emailAccountEvents
+    @State private var emailBirthdayReminders = AppSettingsStore.emailBirthdayReminders
     @State private var importStatus: String?
     @State private var isImporting = false
+    @State private var emailTestStatus: String?
+    @State private var isSendingTestEmail = false
+    @State private var confirmDeleteAccount = false
 
     private var nextPerson: BirthdayPerson? {
         people.sorted { $0.daysUntil < $1.daysUntil }.first
@@ -26,6 +39,8 @@ struct SettingsView: View {
         NavigationStack {
             List {
                 remindersSection
+                emailSection
+                companionAISection
                 promptsSection
                 dataSection
                 accountSection
@@ -108,6 +123,121 @@ struct SettingsView: View {
         }
     }
 
+    private var emailSection: some View {
+        Section {
+            TextField("you@example.com", text: $notificationEmail)
+                .textContentType(.emailAddress)
+                #if os(iOS)
+                .keyboardType(.emailAddress)
+                .textInputAutocapitalization(.never)
+                #endif
+                .autocorrectionDisabled()
+                .onChange(of: notificationEmail) { _, value in
+                    AppSettingsStore.notificationEmail = value
+                }
+
+            Toggle("Account emails (welcome / sign-in)", isOn: $emailAccountEvents)
+                .onChange(of: emailAccountEvents) { _, value in
+                    AppSettingsStore.emailAccountEvents = value
+                }
+
+            Toggle("Birthday reminder emails", isOn: $emailBirthdayReminders)
+                .onChange(of: emailBirthdayReminders) { _, value in
+                    AppSettingsStore.emailBirthdayReminders = value
+                }
+
+            Button {
+                Task { await sendTestEmail() }
+            } label: {
+                if isSendingTestEmail {
+                    HStack {
+                        ProgressView()
+                        Text("Sending…")
+                    }
+                } else {
+                    Text("Send test email")
+                }
+            }
+            .disabled(isSendingTestEmail)
+
+            if let emailTestStatus {
+                Text(emailTestStatus)
+                    .font(.footnote)
+                    .foregroundStyle(emailTestStatus.hasPrefix("Sent") ? Color.secondary : Color.orange)
+            }
+        } header: {
+            Text("Email notifications")
+        } footer: {
+            Text("On-device push reminders work without email. Email needs your address + a running companion backend (HTTPS for App Store).")
+        }
+    }
+
+    private var companionAISection: some View {
+        Section {
+            Toggle("Companion tips", isOn: $aiEnabled)
+                .onChange(of: aiEnabled) { _, value in
+                    AppSettingsStore.aiEnabled = value
+                }
+
+            Picker("Provider", selection: $aiProvider) {
+                ForEach(CompanionAIProvider.allCases) { provider in
+                    Text(provider.title).tag(provider)
+                }
+            }
+            .onChange(of: aiProvider) { _, value in
+                AppSettingsStore.aiProvider = value
+            }
+            .disabled(!aiEnabled)
+
+            #if DEBUG
+            if aiEnabled && (aiProvider == .anthropic || aiProvider == .auto) {
+                HStack {
+                    Group {
+                        if showAPIKey {
+                            TextField("Server API key (DEBUG)", text: $anthropicKey)
+                        } else {
+                            SecureField("Server API key (DEBUG)", text: $anthropicKey)
+                        }
+                    }
+                    .textContentType(.password)
+                    #if os(iOS)
+                    .textInputAutocapitalization(.never)
+                    #endif
+                    .autocorrectionDisabled()
+                    .onChange(of: anthropicKey) { _, value in
+                        AISecrets.anthropicAPIKey = value
+                    }
+
+                    Button {
+                        showAPIKey.toggle()
+                    } label: {
+                        Image(systemName: showAPIKey ? "eye.slash" : "eye")
+                    }
+                    .buttonStyle(.plain)
+                }
+
+                TextField("Backend URL override", text: $backendURL)
+                    #if os(iOS)
+                    .textInputAutocapitalization(.never)
+                    .keyboardType(.URL)
+                    #endif
+                    .autocorrectionDisabled()
+                    .onChange(of: backendURL) { _, value in
+                        AppSettingsStore.companionBackendURL = value
+                    }
+            }
+            #endif
+        } header: {
+            Text("Companion")
+        } footer: {
+            #if DEBUG
+            Text("DEBUG only: optional key or LAN backend URL. App Store builds use CompanionConfig.productionBackendURL.")
+            #else
+            Text("Local tips always work. Enhance uses on-device help when available, otherwise your companion server.")
+            #endif
+        }
+    }
+
     private var promptsSection: some View {
         Section {
             Stepper("Ask after \(inactivityDays) days away", value: $inactivityDays, in: 2...30)
@@ -182,6 +312,20 @@ struct SettingsView: View {
                 authManager.signOut()
                 dismiss()
             }
+            Button("Delete account & data on this device", role: .destructive) {
+                confirmDeleteAccount = true
+            }
+            if let privacy = CompanionConfig.privacyPolicyURL {
+                Link("Privacy Policy", destination: privacy)
+            }
+        }
+        .alert("Delete all data?", isPresented: $confirmDeleteAccount) {
+            Button("Delete everything", role: .destructive) {
+                deleteAllLocalData()
+            }
+            Button("Cancel", role: .cancel) {}
+        } message: {
+            Text("Removes birthdays, drafts, and sign-in from this iPhone. This can’t be undone.")
         }
     }
 
@@ -219,6 +363,24 @@ struct SettingsView: View {
             return "Sync is on. Quit and reopen Remember My Birthday once so the CloudKit store can start. Watch still uses the shared App Group when available."
         }
         return "Keeps birthdays on this device only. Turn on to sync via your iCloud account (restart required)."
+    }
+
+    private func sendTestEmail() async {
+        isSendingTestEmail = true
+        emailTestStatus = nil
+        let error = await EmailNotifier.sendTestEmail()
+        isSendingTestEmail = false
+        emailTestStatus = error == nil ? "Sent — check your inbox (and spam)." : error
+    }
+
+    private func deleteAllLocalData() {
+        for person in people {
+            Task { await notificationScheduler.cancel(for: person) }
+            modelContext.delete(person)
+        }
+        try? modelContext.save()
+        authManager.deleteAccountOnDevice()
+        dismiss()
     }
 
     private func hourLabel(_ hour: Int) -> String {

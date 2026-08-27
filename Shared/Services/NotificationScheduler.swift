@@ -359,6 +359,7 @@ final class ReminderNotificationDelegate: NSObject, UNUserNotificationCenterDele
         withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void
     ) {
         DispatchQueue.main.async {
+            Self.maybeEmailFromNotification(notification.request.content.userInfo)
             completionHandler([.banner, .sound, .badge, .list])
         }
     }
@@ -374,8 +375,26 @@ final class ReminderNotificationDelegate: NSObject, UNUserNotificationCenterDele
         }
     }
 
+    private static func maybeEmailFromNotification(_ info: [AnyHashable: Any]) {
+        #if os(watchOS)
+        return
+        #else
+        guard (info["isTest"] as? Bool) != true else { return }
+        let kind = info["kind"] as? String
+        if kind == "contactBirthdayPrompt" { return }
+        guard let name = info["personName"] as? String, !name.isEmpty else { return }
+        let days = (info["offsetDays"] as? Int) ?? (info["offsetDays"] as? NSNumber)?.intValue
+        EmailNotifier.sendBirthdayReminder(
+            personName: name,
+            daysUntil: days ?? 0,
+            note: nil
+        )
+        #endif
+    }
+
     private static func handle(response: UNNotificationResponse, center: UNUserNotificationCenter) {
         let info = response.notification.request.content.userInfo
+        maybeEmailFromNotification(info)
         let kind = info["kind"] as? String
 
         if kind == "contactBirthdayPrompt"

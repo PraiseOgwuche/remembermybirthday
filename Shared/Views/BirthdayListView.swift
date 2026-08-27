@@ -222,6 +222,7 @@ struct BirthdayListView: View {
                     people: people,
                     notificationsAuthorized: notificationScheduler.isAuthorized
                 )
+                EmailReminderSweep.run(people: people)
                 handlePendingDeepLink()
                 handlePendingContactAdd()
                 WidgetSnapshotPublisher.publish(people: people)

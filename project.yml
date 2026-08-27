@@ -48,11 +48,13 @@ targets:
           - Widget/**
     resources:
       - path: Platforms/iOS/Resources/Assets.xcassets
+      - path: Platforms/iOS/Resources/PrivacyInfo.xcprivacy
     info:
       path: Platforms/iOS/Resources/Info.plist
       properties:
         CFBundleDisplayName: Remember My Birthday
         LSRequiresIPhoneOS: true
+        ITSAppUsesNonExemptEncryption: false
         UILaunchScreen: {}
         UIRequiresFullScreen: true
         UISupportedInterfaceOrientations:
@@ -189,6 +191,17 @@ targets:
           - ContactBirthdayPromptCoordinator.swift
           - WidgetSnapshotPublisher.swift
           - AuthManager.swift
+          - AISecrets.swift
+          - CompanionAISettings.swift
+          - CompanionAIService.swift
+          - AnthropicCompanionClient.swift
+          - AppleCompanionAI.swift
+          - CompanionActions.swift
+          - CompanionEngine.swift
+          - CompanionConfig.swift
+          - EmailNotifier.swift
+          - EmailSettings.swift
+          - EmailReminderSweep.swift
       - path: Shared/Views/Watch
       - path: Shared/Theme
       - path: Platforms/Watch

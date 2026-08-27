@@ -15,6 +15,7 @@ final class AuthManager: ObservableObject {
     private let nameKey = "remember.userName"
     private let idKey = "remember.userIdentifier"
     private let onboardingKey = "remember.hasCompletedOnboarding"
+    private let emailKey = "remember.userEmail"
 
     init() {
         let defaults = UserDefaults.standard
@@ -22,6 +23,10 @@ final class AuthManager: ObservableObject {
         self.userName = defaults.string(forKey: nameKey)
         self.userIdentifier = defaults.string(forKey: idKey)
         self.hasCompletedOnboarding = defaults.bool(forKey: onboardingKey)
+        if let email = defaults.string(forKey: emailKey), !email.isEmpty,
+           AppSettingsStore.notificationEmail.isEmpty {
+            AppSettingsStore.notificationEmail = email
+        }
     }
 
     func handleSignIn(_ result: Result<ASAuthorization, Error>) {
@@ -43,9 +48,23 @@ final class AuthManager: ObservableObject {
                 }
             }
 
+            // Apple only returns email on the first authorization — stash it for notifications.
+            if let email = credential.email, !email.isEmpty {
+                defaults.set(email, forKey: emailKey)
+                AppSettingsStore.notificationEmail = email
+            }
+
             userIdentifier = identifier
             isSignedIn = true
             signInMessage = nil
+
+            let welcomeKey = "remember.sentWelcomeEmail"
+            if !defaults.bool(forKey: welcomeKey) {
+                EmailNotifier.sendAccountEvent(.welcome, name: userName)
+                defaults.set(true, forKey: welcomeKey)
+            } else {
+                EmailNotifier.sendAccountEvent(.signIn, name: userName)
+            }
 
         case .failure(let error):
             if let authError = error as? ASAuthorizationError {
@@ -104,8 +123,27 @@ final class AuthManager: ObservableObject {
         defaults.set(false, forKey: signedInKey)
         defaults.removeObject(forKey: nameKey)
         defaults.removeObject(forKey: idKey)
+        defaults.removeObject(forKey: emailKey)
         isSignedIn = false
         userName = nil
         userIdentifier = nil
+    }
+
+    /// App Store account-deletion path: clears identity flags on this device.
+    /// Birthdays are deleted by the caller (SwiftData) before this runs.
+    func deleteAccountOnDevice() {
+        let defaults = UserDefaults.standard
+        defaults.set(false, forKey: signedInKey)
+        defaults.set(false, forKey: onboardingKey)
+        defaults.removeObject(forKey: nameKey)
+        defaults.removeObject(forKey: idKey)
+        defaults.removeObject(forKey: emailKey)
+        defaults.removeObject(forKey: "remember.sentWelcomeEmail")
+        isSignedIn = false
+        hasCompletedOnboarding = false
+        userName = nil
+        userIdentifier = nil
+        signInMessage = nil
+        AppSettingsStore.notificationEmail = ""
     }
 }

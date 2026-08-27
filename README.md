@@ -16,7 +16,11 @@ Scheme **Remember** → select your Team under Signing → `⌘R`.
 
 ## Landing page
 
-Static site in [`landing/`](landing/index.html). Host with GitHub Pages or any static host.
+Static site in [`landing/`](landing/index.html). Host with GitHub Pages. Privacy: [`landing/privacy.html`](landing/privacy.html).
+
+## App Store
+
+See **[APP_STORE.md](APP_STORE.md)** for the ASAP submission checklist (signing, backend HTTPS, screenshots, review notes).
 
 ## Apple Developer checklist
 
@@ -25,3 +29,4 @@ Static site in [`landing/`](landing/index.html). Host with GitHub Pages or any s
 3. App Groups → `group.com.remembermybirthday.app` (app + widget)
 4. iCloud → CloudKit container `iCloud.com.remembermybirthday.app` (optional)
 5. App Store Connect name: **Remember My Birthday**
+6. Paste production backend HTTPS URL into `CompanionConfig.productionBackendURL` before archive

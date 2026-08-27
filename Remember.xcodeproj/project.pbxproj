@@ -17,6 +17,7 @@
 		1410CADD51B6091A4D945B3A /* NotificationScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C409B3BC79BF2F616E344089 /* NotificationScheduler.swift */; };
 		156AD1626FE9F7E0598725ED /* WidgetSnapshotStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8627F7BC2E48A89FA330FEDC /* WidgetSnapshotStore.swift */; };
 		18D37DE21D604EAAD140FC3F /* AddEditBirthdayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C069336DA20DF35AF0D4DDC /* AddEditBirthdayView.swift */; };
+		19726F44FF8662177B945045 /* AISecrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81C0EAAAA573E83EA62DFD7 /* AISecrets.swift */; };
 		1DB8FD6597CB52A11BD6AF8C /* RememberColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B929E1AC3D9C654F2BD356 /* RememberColors.swift */; };
 		1DFA9F38D6C3E075C115E58A /* ContactAddMethodSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187DAA599CE1B5F4781560A6 /* ContactAddMethodSheet.swift */; };
 		1F676CE8FB99D276DADE767C /* RememberDeepLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1547F4B138D2EE68C927C0 /* RememberDeepLink.swift */; };
@@ -36,48 +37,64 @@
 		4C01367DD91AB5328D93B4BE /* AppSettingsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BAC2E6EE819AEB4F2132E1 /* AppSettingsStore.swift */; };
 		4DCE57B82A57A038B5F0437F /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35BDA07D339D2F24D5D8D05 /* WelcomeView.swift */; };
 		4F1D979E2D2D74D458FF537D /* OnboardingFlowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1741A5850FD8942B239D409 /* OnboardingFlowView.swift */; };
+		522D68E124AAEAE41DF6ED8C /* EmailReminderSweep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D16EEA961A39EFE7834FAA /* EmailReminderSweep.swift */; };
 		52C64C77B01E6015C4FB56BC /* BirthdayListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0442434EFBCB62974195CC2 /* BirthdayListView.swift */; };
 		53738EC516E4AB160C4A085F /* MessageDeepLinkRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B64FD908C735A1FD4C707DE3 /* MessageDeepLinkRouter.swift */; };
+		5400F82C7663CBB8A6F11C8D /* EmailNotifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526BA25E882B8ED1A20E3162 /* EmailNotifier.swift */; };
 		5404608FA825A02BBF60D3AB /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19376AE05A0CA6A0589CEDBD /* SettingsView.swift */; };
 		554E550862D20510CBB0C368 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35BDA07D339D2F24D5D8D05 /* WelcomeView.swift */; };
 		558476C1945C30FFDDC40A5F /* RememberWidget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 960564ABF361A91B2A4779C3 /* RememberWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		5B0F578424811D2BFAE1FC0A /* BirthdayStoreCleanup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183F877087179549EA3256A8 /* BirthdayStoreCleanup.swift */; };
+		6062EBEB6E6F3C857473D3A2 /* CompanionAIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 303C351B0D0F9C32974028F0 /* CompanionAIService.swift */; };
+		642F164CEB4E0C2E422917C9 /* CompanionEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DD6B0E8A00351143C178F1E /* CompanionEngine.swift */; };
 		6954B553A9F523DBDE406DBB /* BirthdayRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AA249094F9E0DD10B97BEF9 /* BirthdayRoute.swift */; };
 		698B8EDD62141A3668DD7563 /* RememberDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15FA74C1EDEBD36269BBEE7 /* RememberDataStore.swift */; };
 		6DE1EE2FE5F41A418E491149 /* MessageDeepLinkRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B64FD908C735A1FD4C707DE3 /* MessageDeepLinkRouter.swift */; };
 		6E7B9ECF7BEAF57B9290AFCF /* ContactBirthdayPromptStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA19A56004A615AD8E601565 /* ContactBirthdayPromptStore.swift */; };
+		7232181B27ED56D15EDBAC84 /* CompanionAISettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D833A77F3F6AE5FCD4AD15F /* CompanionAISettings.swift */; };
 		739B8604A118FD249D4FE744 /* NotificationScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C409B3BC79BF2F616E344089 /* NotificationScheduler.swift */; };
+		77ABB9A9B4B87429C93E4CD4 /* CompanionEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DD6B0E8A00351143C178F1E /* CompanionEngine.swift */; };
+		7E4B9AC94AAF6D1D74866BB0 /* EmailSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D8C9462D62666812767754 /* EmailSettings.swift */; };
 		8032330DA1572627BFC42360 /* ContactBirthdayPromptCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDBDD0CDC5C383045E0FED1F /* ContactBirthdayPromptCoordinator.swift */; };
 		814AD58C1E52DF1BCB4890E5 /* AppSettingsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BAC2E6EE819AEB4F2132E1 /* AppSettingsStore.swift */; };
 		8253A2BD6B5ACAA290E1363C /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 896B13712BAE2EE1AC5CA298 /* AuthManager.swift */; };
 		82DEFC65EE9B159AD1EFBFDC /* NotificationScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C409B3BC79BF2F616E344089 /* NotificationScheduler.swift */; };
 		84320A30DDBB58920E1368C4 /* BirthdayPerson.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CAAE06FE614B6C24D59F8E2 /* BirthdayPerson.swift */; };
+		8469B8171064A1089E8A9FEE /* CompanionConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 415B69BAEDC255BD2035EE15 /* CompanionConfig.swift */; };
 		859A42082A63B275F16F9941 /* RememberDeepLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1547F4B138D2EE68C927C0 /* RememberDeepLink.swift */; };
 		8662D9DA7D7701EF151A7262 /* BirthdayRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AA249094F9E0DD10B97BEF9 /* BirthdayRoute.swift */; };
 		891180D8135F3BCA2982FB06 /* MessageComposeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2081C17B6959754B8294F45B /* MessageComposeView.swift */; };
+		8920087C346D68D20D9B8E80 /* AISecrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = D81C0EAAAA573E83EA62DFD7 /* AISecrets.swift */; };
+		8C8926C21EB963CB32C94A70 /* CompanionAIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 303C351B0D0F9C32974028F0 /* CompanionAIService.swift */; };
+		8DCC6169AB1101BB8D8D5B34 /* CompanionActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7A53CB902E4BBB010F3C84 /* CompanionActions.swift */; };
 		8DF7959CEE3A5EC5BC873D75 /* BirthdayMessageComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE60BF84A7B5D3816B76ACDE /* BirthdayMessageComposer.swift */; };
 		930A90BFE9F3247F62AD78DA /* GiftIdeasProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5055DC6809832A34A79CF57D /* GiftIdeasProvider.swift */; };
 		99D97CC124504D5D0F49F2DB /* WidgetSnapshotStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8627F7BC2E48A89FA330FEDC /* WidgetSnapshotStore.swift */; };
 		9AB9601AF296D989B7FD5A6E /* ContactAddMethodSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187DAA599CE1B5F4781560A6 /* ContactAddMethodSheet.swift */; };
 		9E9FE85247F5E4F3DC09BC26 /* WidgetSnapshotStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8627F7BC2E48A89FA330FEDC /* WidgetSnapshotStore.swift */; };
 		A2FA5C1E40BA6E818AC516B5 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 896B13712BAE2EE1AC5CA298 /* AuthManager.swift */; };
+		A92A62DD95929F5C20CF3A2E /* CompanionAISettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D833A77F3F6AE5FCD4AD15F /* CompanionAISettings.swift */; };
 		ACBB08778BEC6FA8442E6C8F /* WidgetSetupPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB917FBD71332FFF8FF3D3E /* WidgetSetupPreview.swift */; };
 		ACE018525C00F55A4D859051 /* WatchRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1507CDB9A622A75B8E82AEBB /* WatchRootView.swift */; };
 		AD463DEEB3EAA38DE2D21ED3 /* ContactBirthdayPromptCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDBDD0CDC5C383045E0FED1F /* ContactBirthdayPromptCoordinator.swift */; };
 		AD893408473CA55499E8C12C /* MessageComposeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2081C17B6959754B8294F45B /* MessageComposeView.swift */; };
 		AD9C3DCDBB6D9094F64D35C9 /* VoiceBirthdayCapture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03158A6D7D263C0B4FE04F9C /* VoiceBirthdayCapture.swift */; };
 		AE2B55B8323BBE54D137FB46 /* VoiceBirthdayCapture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03158A6D7D263C0B4FE04F9C /* VoiceBirthdayCapture.swift */; };
+		B0BF175901D5A89C59C7429E /* AnthropicCompanionClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7F4226CA6DF2B043777D87 /* AnthropicCompanionClient.swift */; };
 		B1F602C8A8220598E77462BD /* OnboardingFlowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1741A5850FD8942B239D409 /* OnboardingFlowView.swift */; };
 		B2DD24A7FE264AE2772A6C92 /* RememberDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15FA74C1EDEBD36269BBEE7 /* RememberDataStore.swift */; };
 		B2EA8CC8A0C0FEC2DDDD3DB2 /* AppSettingsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BAC2E6EE819AEB4F2132E1 /* AppSettingsStore.swift */; };
 		B45E1337EAC6AD57AB193405 /* RemindersSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6BBF6336C1EFF5337D47414 /* RemindersSettingsView.swift */; };
 		B54844785E44DE41E4B8EEF6 /* BirthdayMessageComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE60BF84A7B5D3816B76ACDE /* BirthdayMessageComposer.swift */; };
 		B73185741EA7BD99759EAC13 /* BirthdayListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0442434EFBCB62974195CC2 /* BirthdayListView.swift */; };
+		B95FBAE0BB44F905A8039BC5 /* EmailReminderSweep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D16EEA961A39EFE7834FAA /* EmailReminderSweep.swift */; };
+		B9D75C2053391083BFF9CF8E /* AnthropicCompanionClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC7F4226CA6DF2B043777D87 /* AnthropicCompanionClient.swift */; };
 		BA64B5E165DE91F7581C5091 /* RememberDeepLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1547F4B138D2EE68C927C0 /* RememberDeepLink.swift */; };
 		BB32B35B41B7F2D4EC6E9809 /* GiftIdeasProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5055DC6809832A34A79CF57D /* GiftIdeasProvider.swift */; };
 		BB46A44C8C0DB5B0CB4E390A /* RememberDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15FA74C1EDEBD36269BBEE7 /* RememberDataStore.swift */; };
 		BBB908239E21A4848C59A86B /* ContactBirthdayMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A5B74E1F81126331DDADBA2 /* ContactBirthdayMatcher.swift */; };
 		BED2422D2CF19CE59ECFD7AB /* WidgetSnapshotPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB5C910123DF02519345C01 /* WidgetSnapshotPublisher.swift */; };
+		C088E07A88FEEED5967A9D2D /* EmailSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D8C9462D62666812767754 /* EmailSettings.swift */; };
 		C3ED7709F670C673C76F580A /* RemindersSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6BBF6336C1EFF5337D47414 /* RemindersSettingsView.swift */; };
 		C407E6068B7549A9EBC75C65 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19376AE05A0CA6A0589CEDBD /* SettingsView.swift */; };
 		C6A308ED28BECFB194B7B4B7 /* BirthdayImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19B81B765899C0A67A1CA4F2 /* BirthdayImporter.swift */; };
@@ -87,15 +104,21 @@
 		CB754F4D48E420C242E49B13 /* BirthdayRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AA249094F9E0DD10B97BEF9 /* BirthdayRoute.swift */; };
 		D1BD0831A9A577FA74C7D214 /* RememberColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B929E1AC3D9C654F2BD356 /* RememberColors.swift */; };
 		DC15C1C516F1E6B216177E04 /* BirthdayMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FE9858FFBC1DD2C51B9C940 /* BirthdayMessageView.swift */; };
+		DD1FE319E3BBDB609751535B /* AppleCompanionAI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D60325F147384FAB89675EC9 /* AppleCompanionAI.swift */; };
 		DDA1BA239253B410A45369C4 /* RememberMacApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7891EBC86D4E314DF3BC4128 /* RememberMacApp.swift */; };
+		DEC2980704A45BA1652A92AC /* CompanionActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7A53CB902E4BBB010F3C84 /* CompanionActions.swift */; };
 		DFD813AF223A4F53009ABC82 /* BirthdayStoreCleanup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183F877087179549EA3256A8 /* BirthdayStoreCleanup.swift */; };
 		E06BED0AEE719B51D3B6D3CF /* ContactBirthdayPromptStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA19A56004A615AD8E601565 /* ContactBirthdayPromptStore.swift */; };
 		E0BE18D5B9B16756E0F47FE3 /* WidgetSnapshotPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB5C910123DF02519345C01 /* WidgetSnapshotPublisher.swift */; };
+		E23288914757936DB4620CCD /* AppleCompanionAI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D60325F147384FAB89675EC9 /* AppleCompanionAI.swift */; };
+		E763219CCA31A15BBCC9BC8F /* EmailNotifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526BA25E882B8ED1A20E3162 /* EmailNotifier.swift */; };
 		EB6951146CD0BD8230E7AE14 /* GiftIdeasProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5055DC6809832A34A79CF57D /* GiftIdeasProvider.swift */; };
 		F0D5B6E844366EC670699B45 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8AF42BE9B8086D418FF4867A /* Assets.xcassets */; };
 		F663868B657F4AD973EE7904 /* VoiceAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91D803744F2CF519780261D /* VoiceAddView.swift */; };
+		F9AAD303AC3FD2641C6954C6 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 26CEB8035E31FFF1B480F471 /* PrivacyInfo.xcprivacy */; };
 		FB249050BD01D25BE6702C91 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 07E74DDBB5176AAA9F2AA4B4 /* Assets.xcassets */; };
 		FF8B42A142556ADE7968CADE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3A88A42D185421E19A53C691 /* Assets.xcassets */; };
+		FFBF2C6327C79C6ABAF6A455 /* CompanionConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 415B69BAEDC255BD2035EE15 /* CompanionConfig.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -129,6 +152,7 @@
 		04FC0664B6E5D7104DC4A491 /* RememberWatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RememberWatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		07E74DDBB5176AAA9F2AA4B4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1507CDB9A622A75B8E82AEBB /* WatchRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchRootView.swift; sourceTree = "<group>"; };
+		16D8C9462D62666812767754 /* EmailSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailSettings.swift; sourceTree = "<group>"; };
 		183F877087179549EA3256A8 /* BirthdayStoreCleanup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthdayStoreCleanup.swift; sourceTree = "<group>"; };
 		187DAA599CE1B5F4781560A6 /* ContactAddMethodSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactAddMethodSheet.swift; sourceTree = "<group>"; };
 		18B567E8ECA2964509CA540A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -137,21 +161,28 @@
 		1A2DC5ED9423B6ED0EEC86CE /* RememberApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RememberApp.swift; sourceTree = "<group>"; };
 		2081C17B6959754B8294F45B /* MessageComposeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageComposeView.swift; sourceTree = "<group>"; };
 		25E8E6FBE9EAD1E5D80B2957 /* Remember.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Remember.entitlements; sourceTree = "<group>"; };
+		26CEB8035E31FFF1B480F471 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		2B3FA07CE1F83A4AC63FFCE5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		2D833A77F3F6AE5FCD4AD15F /* CompanionAISettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanionAISettings.swift; sourceTree = "<group>"; };
+		303C351B0D0F9C32974028F0 /* CompanionAIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanionAIService.swift; sourceTree = "<group>"; };
 		32D213F36755FC4E23B0946A /* BirthdaySpeechParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthdaySpeechParser.swift; sourceTree = "<group>"; };
 		39CAE1E4A8462AB879C81F6E /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		3A5B74E1F81126331DDADBA2 /* ContactBirthdayMatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactBirthdayMatcher.swift; sourceTree = "<group>"; };
 		3A88A42D185421E19A53C691 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3BFAD65E58875C86F2C18EFC /* RememberMac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RememberMac.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		415B69BAEDC255BD2035EE15 /* CompanionConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanionConfig.swift; sourceTree = "<group>"; };
 		46D7FCB1E28870C47B4F20FA /* RememberWatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RememberWatchApp.swift; sourceTree = "<group>"; };
 		482D137F5EC48B95451B7F04 /* Remember.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Remember.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5055DC6809832A34A79CF57D /* GiftIdeasProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiftIdeasProvider.swift; sourceTree = "<group>"; };
+		526BA25E882B8ED1A20E3162 /* EmailNotifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailNotifier.swift; sourceTree = "<group>"; };
 		5AA249094F9E0DD10B97BEF9 /* BirthdayRoute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthdayRoute.swift; sourceTree = "<group>"; };
 		5C069336DA20DF35AF0D4DDC /* AddEditBirthdayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEditBirthdayView.swift; sourceTree = "<group>"; };
 		5FB5C910123DF02519345C01 /* WidgetSnapshotPublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetSnapshotPublisher.swift; sourceTree = "<group>"; };
 		66BAC2E6EE819AEB4F2132E1 /* AppSettingsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettingsStore.swift; sourceTree = "<group>"; };
 		6D5DCE5701396CE46FCED9B5 /* PersonDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonDetailView.swift; sourceTree = "<group>"; };
+		6DD6B0E8A00351143C178F1E /* CompanionEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanionEngine.swift; sourceTree = "<group>"; };
 		6FE9858FFBC1DD2C51B9C940 /* BirthdayMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthdayMessageView.swift; sourceTree = "<group>"; };
+		70D16EEA961A39EFE7834FAA /* EmailReminderSweep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailReminderSweep.swift; sourceTree = "<group>"; };
 		7891EBC86D4E314DF3BC4128 /* RememberMacApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RememberMacApp.swift; sourceTree = "<group>"; };
 		8627F7BC2E48A89FA330FEDC /* WidgetSnapshotStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetSnapshotStore.swift; sourceTree = "<group>"; };
 		896B13712BAE2EE1AC5CA298 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
@@ -171,12 +202,16 @@
 		C0442434EFBCB62974195CC2 /* BirthdayListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthdayListView.swift; sourceTree = "<group>"; };
 		C409B3BC79BF2F616E344089 /* NotificationScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationScheduler.swift; sourceTree = "<group>"; };
 		D4B929E1AC3D9C654F2BD356 /* RememberColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RememberColors.swift; sourceTree = "<group>"; };
+		D60325F147384FAB89675EC9 /* AppleCompanionAI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleCompanionAI.swift; sourceTree = "<group>"; };
+		D81C0EAAAA573E83EA62DFD7 /* AISecrets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AISecrets.swift; sourceTree = "<group>"; };
+		DC7F4226CA6DF2B043777D87 /* AnthropicCompanionClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnthropicCompanionClient.swift; sourceTree = "<group>"; };
 		E91D803744F2CF519780261D /* VoiceAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceAddView.swift; sourceTree = "<group>"; };
 		EDBDD0CDC5C383045E0FED1F /* ContactBirthdayPromptCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactBirthdayPromptCoordinator.swift; sourceTree = "<group>"; };
 		EE60BF84A7B5D3816B76ACDE /* BirthdayMessageComposer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthdayMessageComposer.swift; sourceTree = "<group>"; };
 		EF1547F4B138D2EE68C927C0 /* RememberDeepLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RememberDeepLink.swift; sourceTree = "<group>"; };
 		F15FA74C1EDEBD36269BBEE7 /* RememberDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RememberDataStore.swift; sourceTree = "<group>"; };
 		F1741A5850FD8942B239D409 /* OnboardingFlowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingFlowView.swift; sourceTree = "<group>"; };
+		FA7A53CB902E4BBB010F3C84 /* CompanionActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanionActions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -291,15 +326,26 @@
 		723A364C7069263E74E1E163 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				D81C0EAAAA573E83EA62DFD7 /* AISecrets.swift */,
+				DC7F4226CA6DF2B043777D87 /* AnthropicCompanionClient.swift */,
+				D60325F147384FAB89675EC9 /* AppleCompanionAI.swift */,
 				66BAC2E6EE819AEB4F2132E1 /* AppSettingsStore.swift */,
 				896B13712BAE2EE1AC5CA298 /* AuthManager.swift */,
 				19B81B765899C0A67A1CA4F2 /* BirthdayImporter.swift */,
 				EE60BF84A7B5D3816B76ACDE /* BirthdayMessageComposer.swift */,
 				32D213F36755FC4E23B0946A /* BirthdaySpeechParser.swift */,
 				183F877087179549EA3256A8 /* BirthdayStoreCleanup.swift */,
+				FA7A53CB902E4BBB010F3C84 /* CompanionActions.swift */,
+				303C351B0D0F9C32974028F0 /* CompanionAIService.swift */,
+				2D833A77F3F6AE5FCD4AD15F /* CompanionAISettings.swift */,
+				415B69BAEDC255BD2035EE15 /* CompanionConfig.swift */,
+				6DD6B0E8A00351143C178F1E /* CompanionEngine.swift */,
 				3A5B74E1F81126331DDADBA2 /* ContactBirthdayMatcher.swift */,
 				EDBDD0CDC5C383045E0FED1F /* ContactBirthdayPromptCoordinator.swift */,
 				BA19A56004A615AD8E601565 /* ContactBirthdayPromptStore.swift */,
+				526BA25E882B8ED1A20E3162 /* EmailNotifier.swift */,
+				70D16EEA961A39EFE7834FAA /* EmailReminderSweep.swift */,
+				16D8C9462D62666812767754 /* EmailSettings.swift */,
 				5055DC6809832A34A79CF57D /* GiftIdeasProvider.swift */,
 				B64FD908C735A1FD4C707DE3 /* MessageDeepLinkRouter.swift */,
 				C409B3BC79BF2F616E344089 /* NotificationScheduler.swift */,
@@ -355,6 +401,7 @@
 			children = (
 				8AF42BE9B8086D418FF4867A /* Assets.xcassets */,
 				18B567E8ECA2964509CA540A /* Info.plist */,
+				26CEB8035E31FFF1B480F471 /* PrivacyInfo.xcprivacy */,
 				8AADB40BC5D9F256C8C01E8F /* Remember.entitlements */,
 			);
 			path = Resources;
@@ -507,6 +554,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F0D5B6E844366EC670699B45 /* Assets.xcassets in Resources */,
+				F9AAD303AC3FD2641C6954C6 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -546,8 +594,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				19726F44FF8662177B945045 /* AISecrets.swift in Sources */,
 				18D37DE21D604EAAD140FC3F /* AddEditBirthdayView.swift in Sources */,
+				B0BF175901D5A89C59C7429E /* AnthropicCompanionClient.swift in Sources */,
 				814AD58C1E52DF1BCB4890E5 /* AppSettingsStore.swift in Sources */,
+				E23288914757936DB4620CCD /* AppleCompanionAI.swift in Sources */,
 				8253A2BD6B5ACAA290E1363C /* AuthManager.swift in Sources */,
 				2381E72A326C4815825216A8 /* BirthdayImporter.swift in Sources */,
 				B73185741EA7BD99759EAC13 /* BirthdayListView.swift in Sources */,
@@ -558,10 +609,18 @@
 				8662D9DA7D7701EF151A7262 /* BirthdayRoute.swift in Sources */,
 				CAA15FFB4182BC6060C8E290 /* BirthdaySpeechParser.swift in Sources */,
 				5B0F578424811D2BFAE1FC0A /* BirthdayStoreCleanup.swift in Sources */,
+				8C8926C21EB963CB32C94A70 /* CompanionAIService.swift in Sources */,
+				A92A62DD95929F5C20CF3A2E /* CompanionAISettings.swift in Sources */,
+				DEC2980704A45BA1652A92AC /* CompanionActions.swift in Sources */,
+				FFBF2C6327C79C6ABAF6A455 /* CompanionConfig.swift in Sources */,
+				642F164CEB4E0C2E422917C9 /* CompanionEngine.swift in Sources */,
 				9AB9601AF296D989B7FD5A6E /* ContactAddMethodSheet.swift in Sources */,
 				0B2CD26664D53D294AF3AD0A /* ContactBirthdayMatcher.swift in Sources */,
 				AD463DEEB3EAA38DE2D21ED3 /* ContactBirthdayPromptCoordinator.swift in Sources */,
 				E06BED0AEE719B51D3B6D3CF /* ContactBirthdayPromptStore.swift in Sources */,
+				E763219CCA31A15BBCC9BC8F /* EmailNotifier.swift in Sources */,
+				B95FBAE0BB44F905A8039BC5 /* EmailReminderSweep.swift in Sources */,
+				C088E07A88FEEED5967A9D2D /* EmailSettings.swift in Sources */,
 				BB32B35B41B7F2D4EC6E9809 /* GiftIdeasProvider.swift in Sources */,
 				AD893408473CA55499E8C12C /* MessageComposeView.swift in Sources */,
 				6DE1EE2FE5F41A418E491149 /* MessageDeepLinkRouter.swift in Sources */,
@@ -588,8 +647,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8920087C346D68D20D9B8E80 /* AISecrets.swift in Sources */,
 				2C6C8082B7A3127C73ABE201 /* AddEditBirthdayView.swift in Sources */,
+				B9D75C2053391083BFF9CF8E /* AnthropicCompanionClient.swift in Sources */,
 				B2EA8CC8A0C0FEC2DDDD3DB2 /* AppSettingsStore.swift in Sources */,
+				DD1FE319E3BBDB609751535B /* AppleCompanionAI.swift in Sources */,
 				A2FA5C1E40BA6E818AC516B5 /* AuthManager.swift in Sources */,
 				C6A308ED28BECFB194B7B4B7 /* BirthdayImporter.swift in Sources */,
 				52C64C77B01E6015C4FB56BC /* BirthdayListView.swift in Sources */,
@@ -600,10 +662,18 @@
 				6954B553A9F523DBDE406DBB /* BirthdayRoute.swift in Sources */,
 				2DCC32D707D865DA83E75F2B /* BirthdaySpeechParser.swift in Sources */,
 				DFD813AF223A4F53009ABC82 /* BirthdayStoreCleanup.swift in Sources */,
+				6062EBEB6E6F3C857473D3A2 /* CompanionAIService.swift in Sources */,
+				7232181B27ED56D15EDBAC84 /* CompanionAISettings.swift in Sources */,
+				8DCC6169AB1101BB8D8D5B34 /* CompanionActions.swift in Sources */,
+				8469B8171064A1089E8A9FEE /* CompanionConfig.swift in Sources */,
+				77ABB9A9B4B87429C93E4CD4 /* CompanionEngine.swift in Sources */,
 				1DFA9F38D6C3E075C115E58A /* ContactAddMethodSheet.swift in Sources */,
 				BBB908239E21A4848C59A86B /* ContactBirthdayMatcher.swift in Sources */,
 				8032330DA1572627BFC42360 /* ContactBirthdayPromptCoordinator.swift in Sources */,
 				6E7B9ECF7BEAF57B9290AFCF /* ContactBirthdayPromptStore.swift in Sources */,
+				5400F82C7663CBB8A6F11C8D /* EmailNotifier.swift in Sources */,
+				522D68E124AAEAE41DF6ED8C /* EmailReminderSweep.swift in Sources */,
+				7E4B9AC94AAF6D1D74866BB0 /* EmailSettings.swift in Sources */,
 				930A90BFE9F3247F62AD78DA /* GiftIdeasProvider.swift in Sources */,
 				891180D8135F3BCA2982FB06 /* MessageComposeView.swift in Sources */,
 				53738EC516E4AB160C4A085F /* MessageDeepLinkRouter.swift in Sources */,
