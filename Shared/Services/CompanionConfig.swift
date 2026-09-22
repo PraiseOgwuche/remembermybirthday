@@ -1,10 +1,8 @@
 import Foundation
 
-/// Ship-time companion config.
 enum CompanionConfig {
     static let productionBackendURL = "https://remember-companion.onrender.com"
 
-    /// Host `landing/` on this domain (Cloudflare Pages / GitHub Pages custom domain).
     static let siteBaseURL = URL(string: "https://remembermybirthday.me")!
 
     static let privacyPolicyURL = URL(string: "https://remembermybirthday.me/privacy.html")

@@ -136,7 +136,6 @@ struct SettingsView: View {
                     #endif
                     .autocorrectionDisabled()
                     .onChange(of: notificationEmail) { _, value in
-                        // Keep draft text while typing; only promote to account email when valid.
                         AppSettingsStore.notificationEmail = value.trimmingCharacters(in: .whitespacesAndNewlines)
                         let trimmed = value.trimmingCharacters(in: .whitespacesAndNewlines)
                         if trimmed.contains("@"), trimmed.contains(".") {
@@ -204,7 +203,7 @@ struct SettingsView: View {
             Text("Email notifications")
         } footer: {
             #if DEBUG
-            Text("DEBUG: backend override + test buttons. Type a full email (with @), then tap a Test button. Apple only shares email on the first Sign in with Apple.")
+            Text("Dev: backend override and email tests. Use a full email address.")
             #else
             Text("If you signed in with Apple, we use that email automatically (including Hide My Email). Turn toggles off anytime. Push reminders still work without email.")
             #endif
@@ -260,7 +259,7 @@ struct SettingsView: View {
             Text("Companion")
         } footer: {
             #if DEBUG
-            Text("DEBUG: optional provider key. Backend URL is set under Email.")
+            Text("Dev: optional provider key. Backend URL is under Email.")
             #else
             Text("Local tips always work. Enhance uses on-device help when available, otherwise your companion server.")
             #endif

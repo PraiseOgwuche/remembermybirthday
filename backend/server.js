@@ -35,7 +35,6 @@ app.get("/health", (_req, res) => {
   });
 });
 
-/** Companion enhance proxy — keeps the provider API key off the device. */
 app.post("/v1/companion", async (req, res) => {
   if (!anthropic) {
     return res.status(503).json({ error: "ANTHROPIC_API_KEY not configured on server." });

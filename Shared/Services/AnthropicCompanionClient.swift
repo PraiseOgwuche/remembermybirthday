@@ -1,7 +1,6 @@
 import Foundation
 
 enum AnthropicCompanionClient {
-    /// Cheapest capable model — keep prompts tiny; only call on user tap.
     private static let model = "claude-haiku-4-5-20251001"
     private static let maxTokens = 280
 

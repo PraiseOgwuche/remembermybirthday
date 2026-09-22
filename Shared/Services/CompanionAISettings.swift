@@ -23,7 +23,6 @@ extension AppSettingsStore {
     private static let aiProviderKey = "settings.aiProvider"
     private static let backendURLKey = "settings.companionBackendURL"
 
-    /// Master switch for companion enhancements (local tips always work).
     static var aiEnabled: Bool {
         get {
             if UserDefaults.standard.object(forKey: aiEnabledKey) == nil { return true }
@@ -40,7 +39,6 @@ extension AppSettingsStore {
         set { UserDefaults.standard.set(newValue.rawValue, forKey: aiProviderKey) }
     }
 
-    /// Optional proxy override so the provider key never ships inside the app binary.
     static var companionBackendURL: String {
         get { UserDefaults.standard.string(forKey: backendURLKey) ?? "" }
         set { UserDefaults.standard.set(newValue, forKey: backendURLKey) }

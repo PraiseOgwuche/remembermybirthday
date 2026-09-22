@@ -28,7 +28,6 @@ struct CompanionPlan: Equatable, Sendable {
     }
 }
 
-/// Free, on-device companion logic — no API calls.
 enum CompanionEngine {
     static func plan(for person: BirthdayPerson) -> CompanionPlan {
         let rel = person.relationship.lowercased()

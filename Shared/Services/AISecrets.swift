@@ -5,7 +5,6 @@ enum AISecrets {
     private static let service = "com.remembermybirthday.app"
     private static let account = "anthropicAPIKey"
 
-    /// Dev/TestFlight: paste key in Settings. For App Store, prefer the backend proxy.
     static var anthropicAPIKey: String? {
         get { readKeychain() ?? ProcessInfo.processInfo.environment["ANTHROPIC_API_KEY"] }
         set {

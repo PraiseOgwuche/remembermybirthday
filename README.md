@@ -1,8 +1,8 @@
 # Remember My Birthday
 
-Native birthday reminders for iPhone (Mac + Watch targets included).
+Birthday reminders for iPhone (Mac + Watch targets included).
 
-**App Store / home screen name:** Remember My Birthday  
+**App Store name:** Remember My Birthday  
 **Bundle ID:** `com.remembermybirthday.app`
 
 ## Run
@@ -12,21 +12,20 @@ xcodegen generate
 open Remember.xcodeproj
 ```
 
-Scheme **Remember** → select your Team under Signing → `⌘R`.
+Scheme **Remember** → Signing → your Team → `⌘R`.
 
-## Landing page
+## Landing
 
-Static site in [`landing/`](landing/index.html). Host with GitHub Pages. Privacy: [`landing/privacy.html`](landing/privacy.html).
+Static site in [`landing/`](landing/index.html) (privacy + terms included). Live at https://remembermybirthday.me.
 
 ## App Store
 
-See **[APP_STORE.md](APP_STORE.md)** for the ASAP submission checklist (signing, backend HTTPS, screenshots, review notes).
+See **[APP_STORE.md](APP_STORE.md)** for the submission checklist.
 
-## Apple Developer checklist
+## Apple setup
 
 1. App ID `com.remembermybirthday.app`
 2. Sign in with Apple
 3. App Groups → `group.com.remembermybirthday.app` (app + widget)
 4. iCloud → CloudKit container `iCloud.com.remembermybirthday.app` (optional)
-5. App Store Connect name: **Remember My Birthday**
-6. Paste production backend HTTPS URL into `CompanionConfig.productionBackendURL` before archive
+5. Paste production backend HTTPS URL into `CompanionConfig.productionBackendURL` before archive

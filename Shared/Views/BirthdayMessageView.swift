@@ -175,9 +175,14 @@ struct BirthdayMessageView: View {
         #endif
         .onAppear {
             if draft.isEmpty {
-                let aiKey = "companion.ai.draft.\(person.id.uuidString)"
-                if let aiDraft = UserDefaults.standard.string(forKey: aiKey), !aiDraft.isEmpty {
-                    draft = aiDraft
+                let draftKey = "companion.enhance.draft.\(person.id.uuidString)"
+                let legacyDraftKey = "companion.ai.draft.\(person.id.uuidString)"
+                if let enhanceDraft = UserDefaults.standard.string(forKey: draftKey), !enhanceDraft.isEmpty {
+                    draft = enhanceDraft
+                } else if let legacyDraft = UserDefaults.standard.string(forKey: legacyDraftKey), !legacyDraft.isEmpty {
+                    draft = legacyDraft
+                    UserDefaults.standard.set(legacyDraft, forKey: draftKey)
+                    UserDefaults.standard.removeObject(forKey: legacyDraftKey)
                 } else if !person.savedDraft.isEmpty {
                     draft = person.savedDraft
                 } else {

@@ -44,7 +44,7 @@ enum CompanionAIError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .disabled: return "Companion tips are turned off in Settings."
-        case .missingAPIKey: return "Companion server isn’t set up yet (DEBUG only)."
+        case .missingAPIKey: return "Companion server isn’t set up yet."
         case .unavailable: return "On-device companion isn’t available on this device right now."
         case .network(let message): return message
         }
@@ -56,7 +56,6 @@ enum CompanionAIService {
         CompanionEngine.plan(for: person)
     }
 
-    /// Explicit user action only — never auto-fire on every screen open.
     static func enhance(for person: BirthdayPerson, local: CompanionPlan) async throws -> CompanionAIResult {
         guard AppSettingsStore.aiEnabled else { throw CompanionAIError.disabled }
         let provider = AppSettingsStore.aiProvider
@@ -110,13 +109,19 @@ enum CompanionAIService {
 }
 
 enum CompanionAICache {
-    private static func key(_ id: UUID) -> String { "companion.ai.cache.\(id.uuidString)" }
+    private static func key(_ id: UUID) -> String { "companion.enhance.cache.\(id.uuidString)" }
+    private static func legacyKey(_ id: UUID) -> String { "companion.ai.cache.\(id.uuidString)" }
 
     static func load(personId: UUID) -> CompanionAIResult? {
-        guard let data = UserDefaults.standard.data(forKey: key(personId)),
-              let decoded = try? JSONDecoder().decode(Wrapper.self, from: data),
-              decoded.savedAt.timeIntervalSinceNow > -60 * 60 * 24 * 14 else { return nil }
-        return decoded.result
+        if let result = decode(forKey: key(personId)) {
+            return result
+        }
+        if let result = decode(forKey: legacyKey(personId)) {
+            save(result, personId: personId)
+            UserDefaults.standard.removeObject(forKey: legacyKey(personId))
+            return result
+        }
+        return nil
     }
 
     static func save(_ result: CompanionAIResult, personId: UUID) {
@@ -128,6 +133,14 @@ enum CompanionAICache {
 
     static func clear(personId: UUID) {
         UserDefaults.standard.removeObject(forKey: key(personId))
+        UserDefaults.standard.removeObject(forKey: legacyKey(personId))
+    }
+
+    private static func decode(forKey defaultsKey: String) -> CompanionAIResult? {
+        guard let data = UserDefaults.standard.data(forKey: defaultsKey),
+              let decoded = try? JSONDecoder().decode(Wrapper.self, from: data),
+              decoded.savedAt.timeIntervalSinceNow > -60 * 60 * 24 * 14 else { return nil }
+        return decoded.result
     }
 
     private struct Wrapper: Codable {

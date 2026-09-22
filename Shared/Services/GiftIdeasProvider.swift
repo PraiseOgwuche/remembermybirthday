@@ -6,7 +6,6 @@ struct GiftIdea: Identifiable, Hashable {
     let detail: String
 }
 
-/// On-device gift suggestions.
 enum GiftIdeasProvider {
     static func ideas(for person: BirthdayPerson, limit: Int = 5) -> [GiftIdea] {
         var pool: [GiftIdea] = []

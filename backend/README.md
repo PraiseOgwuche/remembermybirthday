@@ -1,28 +1,28 @@
-# Remember companion backend
+# Companion backend
 
-Tiny Node server for:
+Node server for:
 
-1. **Companion proxy** (`POST /v1/companion`) — keeps provider keys off the phone  
-2. **Email** via SendGrid — welcome, sign-in, birthday reminders
+1. `POST /v1/companion` — companion proxy (keys stay on the server)
+2. Email via SendGrid — welcome, sign-in, birthday reminders
 
-## Setup (local)
+## Local
 
 ```bash
 cd backend
 cp .env.example .env
-# edit .env with ANTHROPIC_API_KEY and SENDGRID_API_KEY
+# set ANTHROPIC_API_KEY and SENDGRID_API_KEY
 npm install
 npm run dev
 ```
 
-## SendGrid domain
+## SendGrid
 
-1. Verify `remembermybirthday.me` in SendGrid (DNS CNAMEs + DMARC).
+1. Verify `remembermybirthday.me` in SendGrid.
 2. Set `EMAIL_FROM=Remember My Birthday <hello@remembermybirthday.me>`.
-3. Create an API key with **Mail Send** permission.
+3. API key with Mail Send permission.
 
-## App Store / Render
+## Deploy
 
-Deploy this folder to Render (HTTPS). Env vars: `ANTHROPIC_API_KEY`, `SENDGRID_API_KEY`, `EMAIL_FROM`.
+Render (HTTPS). Env: `ANTHROPIC_API_KEY`, `SENDGRID_API_KEY`, `EMAIL_FROM`.
 
-App URL: `Shared/Services/CompanionConfig.swift` → `productionBackendURL`
+App: `Shared/Services/CompanionConfig.swift` → `productionBackendURL`

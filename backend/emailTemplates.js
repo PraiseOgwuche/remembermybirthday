@@ -1,5 +1,3 @@
-/** Branded HTML + text email bodies for SendGrid. */
-
 const SITE = "https://remembermybirthday.me";
 const SUPPORT = "hello@remembermybirthday.me";
 

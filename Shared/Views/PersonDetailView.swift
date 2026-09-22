@@ -235,7 +235,6 @@ struct PersonDetailView: View {
         isEnhancing = true
         defer { isEnhancing = false }
         do {
-            // First enhance uses cache if present; Refresh clears cache and spends credits again.
             if plan.source != .local {
                 CompanionAICache.clear(personId: person.id)
             }
@@ -251,7 +250,7 @@ struct PersonDetailView: View {
         aiDraft = result.draftSuggestion
         aiGiftTitles = result.giftTitles
         if let draft = result.draftSuggestion, !draft.isEmpty {
-            UserDefaults.standard.set(draft, forKey: "companion.ai.draft.\(person.id.uuidString)")
+            UserDefaults.standard.set(draft, forKey: "companion.enhance.draft.\(person.id.uuidString)")
         }
     }
 }
