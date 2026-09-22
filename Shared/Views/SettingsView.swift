@@ -17,9 +17,9 @@ struct SettingsView: View {
     @State private var iCloudSync = AppSettingsStore.iCloudSyncEnabled
     @State private var aiEnabled = AppSettingsStore.aiEnabled
     @State private var aiProvider = AppSettingsStore.aiProvider
+    @State private var backendURL = AppSettingsStore.companionBackendURL
     #if DEBUG
     @State private var anthropicKey = AISecrets.anthropicAPIKey ?? ""
-    @State private var backendURL = AppSettingsStore.companionBackendURL
     @State private var showAPIKey = false
     #endif
     @State private var notificationEmail = AppSettingsStore.notificationEmail
@@ -136,6 +136,16 @@ struct SettingsView: View {
                     AppSettingsStore.notificationEmail = value
                 }
 
+            TextField("Backend URL", text: $backendURL)
+                #if os(iOS)
+                .textInputAutocapitalization(.never)
+                .keyboardType(.URL)
+                #endif
+                .autocorrectionDisabled()
+                .onChange(of: backendURL) { _, value in
+                    AppSettingsStore.companionBackendURL = value
+                }
+
             Toggle("Account emails (welcome / sign-in)", isOn: $emailAccountEvents)
                 .onChange(of: emailAccountEvents) { _, value in
                     AppSettingsStore.emailAccountEvents = value
@@ -147,7 +157,21 @@ struct SettingsView: View {
                 }
 
             Button {
-                Task { await sendTestEmail() }
+                Task { await runEmailTest(.welcome) }
+            } label: {
+                Text("Test welcome email")
+            }
+            .disabled(isSendingTestEmail)
+
+            Button {
+                Task { await runEmailTest(.signIn) }
+            } label: {
+                Text("Test sign-in email")
+            }
+            .disabled(isSendingTestEmail)
+
+            Button {
+                Task { await runEmailTest(.reminder) }
             } label: {
                 if isSendingTestEmail {
                     HStack {
@@ -155,7 +179,7 @@ struct SettingsView: View {
                         Text("Sending…")
                     }
                 } else {
-                    Text("Send test email")
+                    Text("Test birthday reminder email")
                 }
             }
             .disabled(isSendingTestEmail)
@@ -168,7 +192,7 @@ struct SettingsView: View {
         } header: {
             Text("Email notifications")
         } footer: {
-            Text("On-device push reminders work without email. Email needs your address + a running companion backend (HTTPS for App Store).")
+            Text("Emails send through your companion server (SendGrid). Backend: leave blank to use production, or set https://remember-companion.onrender.com. Continue without account never sends signup mail — use Test buttons while developing.")
         }
     }
 
@@ -215,23 +239,13 @@ struct SettingsView: View {
                     }
                     .buttonStyle(.plain)
                 }
-
-                TextField("Backend URL override", text: $backendURL)
-                    #if os(iOS)
-                    .textInputAutocapitalization(.never)
-                    .keyboardType(.URL)
-                    #endif
-                    .autocorrectionDisabled()
-                    .onChange(of: backendURL) { _, value in
-                        AppSettingsStore.companionBackendURL = value
-                    }
             }
             #endif
         } header: {
             Text("Companion")
         } footer: {
             #if DEBUG
-            Text("DEBUG only: optional key or LAN backend URL. App Store builds use CompanionConfig.productionBackendURL.")
+            Text("DEBUG: optional provider key. Backend URL is set under Email.")
             #else
             Text("Local tips always work. Enhance uses on-device help when available, otherwise your companion server.")
             #endif
@@ -365,12 +379,18 @@ struct SettingsView: View {
         return "Keeps birthdays on this device only. Turn on to sync via your iCloud account (restart required)."
     }
 
-    private func sendTestEmail() async {
+    private func runEmailTest(_ event: EmailNotifier.Event) async {
         isSendingTestEmail = true
         emailTestStatus = nil
-        let error = await EmailNotifier.sendTestEmail()
+        let error = await EmailNotifier.sendTest(event: event, name: authManager.userName)
         isSendingTestEmail = false
-        emailTestStatus = error == nil ? "Sent — check your inbox (and spam)." : error
+        let label: String
+        switch event {
+        case .welcome: label = "welcome"
+        case .signIn: label = "sign-in"
+        case .reminder: label = "reminder"
+        }
+        emailTestStatus = error == nil ? "Sent \(label) — check inbox + spam." : error
     }
 
     private func deleteAllLocalData() {

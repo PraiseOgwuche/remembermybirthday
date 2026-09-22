@@ -32,7 +32,7 @@ Ship **iPhone only** first (scheme **Remember** + widget). Skip Mac/Watch for v1
 ```
 
 1. Create a Web Service from this repo, root `backend`  
-2. Set env vars: `ANTHROPIC_API_KEY`, `RESEND_API_KEY`, `EMAIL_FROM`  
+2. Set env vars: `ANTHROPIC_API_KEY`, `SENDGRID_API_KEY`, `EMAIL_FROM`  
 3. Copy the `https://….onrender.com` URL into:
 
 ```swift

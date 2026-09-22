@@ -149,7 +149,7 @@
 		007C866E25BF19C84DEEDD9B /* RememberWidget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RememberWidget.entitlements; sourceTree = "<group>"; };
 		02D8C29F3F989123EABC217C /* BirthdayNameNormalizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthdayNameNormalizer.swift; sourceTree = "<group>"; };
 		03158A6D7D263C0B4FE04F9C /* VoiceBirthdayCapture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceBirthdayCapture.swift; sourceTree = "<group>"; };
-		04FC0664B6E5D7104DC4A491 /* RememberWatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RememberWatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		04FC0664B6E5D7104DC4A491 /* RememberMyBirthday Watch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "RememberMyBirthday Watch.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		07E74DDBB5176AAA9F2AA4B4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1507CDB9A622A75B8E82AEBB /* WatchRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchRootView.swift; sourceTree = "<group>"; };
 		16D8C9462D62666812767754 /* EmailSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailSettings.swift; sourceTree = "<group>"; };
@@ -161,7 +161,7 @@
 		1A2DC5ED9423B6ED0EEC86CE /* RememberApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RememberApp.swift; sourceTree = "<group>"; };
 		2081C17B6959754B8294F45B /* MessageComposeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageComposeView.swift; sourceTree = "<group>"; };
 		25E8E6FBE9EAD1E5D80B2957 /* Remember.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Remember.entitlements; sourceTree = "<group>"; };
-		26CEB8035E31FFF1B480F471 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		26CEB8035E31FFF1B480F471 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		2B3FA07CE1F83A4AC63FFCE5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		2D833A77F3F6AE5FCD4AD15F /* CompanionAISettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanionAISettings.swift; sourceTree = "<group>"; };
 		303C351B0D0F9C32974028F0 /* CompanionAIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanionAIService.swift; sourceTree = "<group>"; };
@@ -169,10 +169,10 @@
 		39CAE1E4A8462AB879C81F6E /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		3A5B74E1F81126331DDADBA2 /* ContactBirthdayMatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactBirthdayMatcher.swift; sourceTree = "<group>"; };
 		3A88A42D185421E19A53C691 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		3BFAD65E58875C86F2C18EFC /* RememberMac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RememberMac.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3BFAD65E58875C86F2C18EFC /* RememberMyBirthday.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RememberMyBirthday.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		415B69BAEDC255BD2035EE15 /* CompanionConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanionConfig.swift; sourceTree = "<group>"; };
 		46D7FCB1E28870C47B4F20FA /* RememberWatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RememberWatchApp.swift; sourceTree = "<group>"; };
-		482D137F5EC48B95451B7F04 /* Remember.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Remember.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		482D137F5EC48B95451B7F04 /* RememberMyBirthday.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RememberMyBirthday.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5055DC6809832A34A79CF57D /* GiftIdeasProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiftIdeasProvider.swift; sourceTree = "<group>"; };
 		526BA25E882B8ED1A20E3162 /* EmailNotifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailNotifier.swift; sourceTree = "<group>"; };
 		5AA249094F9E0DD10B97BEF9 /* BirthdayRoute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthdayRoute.swift; sourceTree = "<group>"; };
@@ -189,7 +189,7 @@
 		8AADB40BC5D9F256C8C01E8F /* Remember.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Remember.entitlements; sourceTree = "<group>"; };
 		8AF42BE9B8086D418FF4867A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8B33EAA6024609D55EAEC64A /* RememberWatch.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RememberWatch.entitlements; sourceTree = "<group>"; };
-		960564ABF361A91B2A4779C3 /* RememberWidget.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = RememberWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		960564ABF361A91B2A4779C3 /* RememberWidget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = RememberWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		971EA7C8ADC644758BD1DA78 /* RememberWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RememberWidget.swift; sourceTree = "<group>"; };
 		9CAAE06FE614B6C24D59F8E2 /* BirthdayPerson.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthdayPerson.swift; sourceTree = "<group>"; };
 		AC02C05B873412E11857FB2A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -218,9 +218,9 @@
 		0271739B3D00FE3876AFD68C /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				482D137F5EC48B95451B7F04 /* Remember.app */,
-				3BFAD65E58875C86F2C18EFC /* RememberMac.app */,
-				04FC0664B6E5D7104DC4A491 /* RememberWatch.app */,
+				482D137F5EC48B95451B7F04 /* RememberMyBirthday.app */,
+				3BFAD65E58875C86F2C18EFC /* RememberMyBirthday.app */,
+				04FC0664B6E5D7104DC4A491 /* RememberMyBirthday Watch.app */,
 				960564ABF361A91B2A4779C3 /* RememberWidget.appex */,
 			);
 			name = Products;
@@ -425,7 +425,7 @@
 			packageProductDependencies = (
 			);
 			productName = RememberMac;
-			productReference = 3BFAD65E58875C86F2C18EFC /* RememberMac.app */;
+			productReference = 3BFAD65E58875C86F2C18EFC /* RememberMyBirthday.app */;
 			productType = "com.apple.product-type.application";
 		};
 		C6B6D6461D0F67BEAFCB3584 /* Remember */ = {
@@ -445,7 +445,7 @@
 			packageProductDependencies = (
 			);
 			productName = Remember;
-			productReference = 482D137F5EC48B95451B7F04 /* Remember.app */;
+			productReference = 482D137F5EC48B95451B7F04 /* RememberMyBirthday.app */;
 			productType = "com.apple.product-type.application";
 		};
 		F1F62545C0CF8ABF5109B686 /* RememberWatch */ = {
@@ -463,7 +463,7 @@
 			packageProductDependencies = (
 			);
 			productName = RememberWatch;
-			productReference = 04FC0664B6E5D7104DC4A491 /* RememberWatch.app */;
+			productReference = 04FC0664B6E5D7104DC4A491 /* RememberMyBirthday Watch.app */;
 			productType = "com.apple.product-type.application";
 		};
 		FA66C3463532BE875F9A221E /* RememberWidget */ = {
@@ -493,19 +493,15 @@
 				LastUpgradeCheck = 1600;
 				TargetAttributes = {
 					B9B6F6F4CFEA04A5E7C46FC0 = {
-						DevelopmentTeam = "";
 						ProvisioningStyle = Automatic;
 					};
 					C6B6D6461D0F67BEAFCB3584 = {
-						DevelopmentTeam = "";
 						ProvisioningStyle = Automatic;
 					};
 					F1F62545C0CF8ABF5109B686 = {
-						DevelopmentTeam = "";
 						ProvisioningStyle = Automatic;
 					};
 					FA66C3463532BE875F9A221E = {
-						DevelopmentTeam = "";
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -781,6 +777,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Platforms/iOS/Resources/Remember.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = Z6KK9CTTWS;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = Platforms/iOS/Resources/Info.plist;
 				INFOPLIST_KEY_NSCalendarsFullAccessUsageDescription = "Remember My Birthday reads birthday events from your calendar to set up reminders automatically.";
@@ -866,9 +863,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = Platforms/iOS/Widget/RememberWidget.entitlements;
+				DEVELOPMENT_TEAM = Z6KK9CTTWS;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = Platforms/iOS/Widget/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.remembermybirthday.app.widget;
 				PRODUCT_NAME = RememberWidget;
 				SDKROOT = iphoneos;
@@ -881,9 +883,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = Platforms/iOS/Widget/RememberWidget.entitlements;
+				DEVELOPMENT_TEAM = Z6KK9CTTWS;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = Platforms/iOS/Widget/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.remembermybirthday.app.widget;
 				PRODUCT_NAME = RememberWidget;
 				SDKROOT = iphoneos;
@@ -897,6 +904,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Platforms/Watch/Resources/RememberWatch.entitlements;
+				DEVELOPMENT_TEAM = Z6KK9CTTWS;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = Platforms/Watch/Resources/Info.plist;
 				PRODUCT_BUNDLE_IDENTIFIER = com.remembermybirthday.app.watchkitapp;
@@ -912,6 +920,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Platforms/Watch/Resources/RememberWatch.entitlements;
+				DEVELOPMENT_TEAM = Z6KK9CTTWS;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = Platforms/Watch/Resources/Info.plist;
 				PRODUCT_BUNDLE_IDENTIFIER = com.remembermybirthday.app.watchkitapp;
@@ -928,6 +937,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Platforms/iOS/Resources/Remember.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = Z6KK9CTTWS;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = Platforms/iOS/Resources/Info.plist;
 				INFOPLIST_KEY_NSCalendarsFullAccessUsageDescription = "Remember My Birthday reads birthday events from your calendar to set up reminders automatically.";
@@ -954,9 +964,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Platforms/Mac/Resources/Remember.entitlements;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = Z6KK9CTTWS;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = Platforms/Mac/Resources/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.remembermybirthday.app.mac;
 				PRODUCT_NAME = RememberMyBirthday;
@@ -970,9 +984,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Platforms/Mac/Resources/Remember.entitlements;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = Z6KK9CTTWS;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = Platforms/Mac/Resources/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.remembermybirthday.app.mac;
 				PRODUCT_NAME = RememberMyBirthday;

@@ -10,11 +10,9 @@ services:
     envVars:
       - key: ANTHROPIC_API_KEY
         sync: false
-      - key: RESEND_API_KEY
+      - key: SENDGRID_API_KEY
         sync: false
       - key: ANTHROPIC_MODEL
         value: claude-haiku-4-5-20251001
       - key: EMAIL_FROM
-        value: Remember My Birthday <onboarding@resend.dev>
-      - key: PORT
-        value: "10000"
+        value: Remember My Birthday <hello@remembermybirthday.me>

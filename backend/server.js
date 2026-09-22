@@ -2,7 +2,7 @@ import "dotenv/config";
 import cors from "cors";
 import express from "express";
 import Anthropic from "@anthropic-ai/sdk";
-import { Resend } from "resend";
+import sgMail from "@sendgrid/mail";
 
 const app = express();
 app.use(cors());
@@ -11,17 +11,26 @@ app.use(express.json({ limit: "32kb" }));
 const port = Number(process.env.PORT || 8787);
 const anthropicKey = process.env.ANTHROPIC_API_KEY || "";
 const model = process.env.ANTHROPIC_MODEL || "claude-haiku-4-5-20251001";
-const resendKey = process.env.RESEND_API_KEY || "";
-const emailFrom = process.env.EMAIL_FROM || "Remember My Birthday <onboarding@resend.dev>";
+const sendgridKey = process.env.SENDGRID_API_KEY || "";
+const emailFrom =
+  process.env.EMAIL_FROM || "Remember My Birthday <hello@remembermybirthday.me>";
 
 const anthropic = anthropicKey ? new Anthropic({ apiKey: anthropicKey }) : null;
-const resend = resendKey ? new Resend(resendKey) : null;
+const emailReady = Boolean(sendgridKey);
+
+if (emailReady) {
+  sgMail.setApiKey(sendgridKey);
+}
+
+app.get("/", (_req, res) => {
+  res.type("text").send("Remember companion backend is running. Try GET /health");
+});
 
 app.get("/health", (_req, res) => {
   res.json({
     ok: true,
-    anthropic: Boolean(anthropic),
-    email: Boolean(resend),
+    companion: Boolean(anthropic),
+    email: emailReady,
   });
 });
 
@@ -70,8 +79,8 @@ app.post("/v1/email/signIn", async (req, res) => {
 });
 
 app.post("/v1/email/reminder", async (req, res) => {
-  if (!resend) {
-    return res.status(503).json({ error: "RESEND_API_KEY not configured on server." });
+  if (!emailReady) {
+    return res.status(503).json({ error: "SENDGRID_API_KEY not configured on server." });
   }
   const email = String(req.body?.email || "").trim();
   const personName = String(req.body?.personName || "Someone").slice(0, 80);
@@ -87,30 +96,31 @@ app.post("/v1/email/reminder", async (req, res) => {
         ? "tomorrow"
         : `in ${daysUntil} days`;
 
+  const text = [
+    `Hey — ${personName}'s birthday is ${when}.`,
+    "",
+    "Open Remember My Birthday to call, draft a message, or schedule a send.",
+    req.body?.note ? `\nNote: ${String(req.body.note).slice(0, 200)}` : "",
+  ]
+    .filter(Boolean)
+    .join("\n");
+
   try {
-    await resend.emails.send({
-      from: emailFrom,
+    await sendMail({
       to: email,
       subject: `${personName}'s birthday is ${when}`,
-      text: [
-        `Hey — ${personName}'s birthday is ${when}.`,
-        "",
-        "Open Remember My Birthday to call, draft a message, or schedule a send.",
-        req.body?.note ? `\nNote: ${String(req.body.note).slice(0, 200)}` : "",
-      ]
-        .filter(Boolean)
-        .join("\n"),
+      text,
     });
     return res.json({ ok: true });
   } catch (err) {
-    console.error("reminder email error", err);
+    console.error("reminder email error", err?.response?.body || err);
     return res.status(502).json({ error: "Failed to send email." });
   }
 });
 
 async function sendAccountEmail(req, res, kind) {
-  if (!resend) {
-    return res.status(503).json({ error: "RESEND_API_KEY not configured on server." });
+  if (!emailReady) {
+    return res.status(503).json({ error: "SENDGRID_API_KEY not configured on server." });
   }
   const email = String(req.body?.email || "").trim();
   const name = String(req.body?.name || "there").slice(0, 80);
@@ -127,12 +137,21 @@ async function sendAccountEmail(req, res, kind) {
     : `Hi ${name},\n\nJust confirming you’re signed in on a device. If this wasn’t you, sign out in the app Settings.\n\n— Remember My Birthday`;
 
   try {
-    await resend.emails.send({ from: emailFrom, to: email, subject, text });
+    await sendMail({ to: email, subject, text });
     return res.json({ ok: true });
   } catch (err) {
-    console.error("account email error", err);
+    console.error("account email error", err?.response?.body || err);
     return res.status(502).json({ error: "Failed to send email." });
   }
+}
+
+async function sendMail({ to, subject, text }) {
+  await sgMail.send({
+    to,
+    from: emailFrom,
+    subject,
+    text,
+  });
 }
 
 function isValidEmail(value) {
@@ -162,8 +181,8 @@ function parseModelJSON(text) {
   };
 }
 
-app.listen(port, () => {
-  console.log(`Remember companion backend on http://localhost:${port}`);
+app.listen(port, "0.0.0.0", () => {
+  console.log(`Remember companion backend on http://0.0.0.0:${port}`);
   console.log(`Companion: ${anthropic ? "ready" : "missing ANTHROPIC_API_KEY"}`);
-  console.log(`Email: ${resend ? "ready" : "missing RESEND_API_KEY"}`);
+  console.log(`Email: ${emailReady ? "ready (SendGrid)" : "missing SENDGRID_API_KEY"}`);
 });

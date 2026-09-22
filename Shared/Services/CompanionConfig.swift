@@ -2,9 +2,7 @@ import Foundation
 
 /// Ship-time companion config. Put your HTTPS Render/Fly URL here before App Store archive.
 enum CompanionConfig {
-    /// Production backend (must be HTTPS). Leave empty until deployed — local tips still work.
-    /// Example: "https://remember-companion.onrender.com"
-    static let productionBackendURL = ""
+    static let productionBackendURL = "https://remember-companion.onrender.com"
 
     /// Privacy policy hosted with the landing site (required in App Store Connect).
     static let privacyPolicyURL = URL(string: "https://praiseogwuche.github.io/remembermybirthday/privacy.html")
