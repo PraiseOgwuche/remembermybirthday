@@ -56,8 +56,8 @@ targets:
         LSRequiresIPhoneOS: true
         ITSAppUsesNonExemptEncryption: false
         UILaunchScreen:
-          UIColorName: LaunchBackground
-          UIImageName: LaunchLogo
+          UIColorName: BrandBlue
+          UIImageName: BrandGift
           UIImageRespectsSafeAreaInsets: true
         UIRequiresFullScreen: true
         UISupportedInterfaceOrientations:

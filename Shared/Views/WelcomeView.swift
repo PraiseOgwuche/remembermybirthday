@@ -12,27 +12,34 @@ struct WelcomeView: View {
         VStack(spacing: 0) {
             Spacer(minLength: 48)
 
-            VStack(spacing: 28) {
-                ZStack {
-                    Circle()
-                        .fill(Color.accentColor.opacity(0.12))
-                        .frame(width: 96, height: 96)
-                    Image(systemName: "gift.fill")
-                        .font(.system(size: 40, weight: .medium))
-                        .foregroundStyle(.tint)
-                        .symbolRenderingMode(.hierarchical)
-                }
-                .accessibilityHidden(true)
+            VStack(spacing: 24) {
+                #if os(iOS)
+                Image("BrandGift")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 72, height: 72)
+                    .padding(22)
+                    .background(RememberColors.brandBlue, in: RoundedRectangle(cornerRadius: 28, style: .continuous))
+                    .accessibilityHidden(true)
+                #else
+                Image(systemName: "gift.fill")
+                    .font(.system(size: 40, weight: .medium))
+                    .foregroundStyle(.white)
+                    .frame(width: 72, height: 72)
+                    .padding(22)
+                    .background(RememberColors.brandBlue, in: RoundedRectangle(cornerRadius: 28, style: .continuous))
+                    .accessibilityHidden(true)
+                #endif
 
-                VStack(spacing: 12) {
+                VStack(spacing: 10) {
                     Text("Remember My Birthday")
                         .font(.system(.largeTitle, design: .default).weight(.bold))
                         .foregroundStyle(.primary)
                         .multilineTextAlignment(.center)
 
                     Text("Never miss someone who matters.")
-                        .font(.title3.weight(.semibold))
-                        .foregroundStyle(.primary)
+                        .font(.title3)
+                        .foregroundStyle(.secondary)
                         .multilineTextAlignment(.center)
 
                     Text("Sync Contacts, get early reminders, and open Messages with a draft ready.")
@@ -41,6 +48,7 @@ struct WelcomeView: View {
                         .multilineTextAlignment(.center)
                         .fixedSize(horizontal: false, vertical: true)
                         .lineSpacing(3)
+                        .padding(.top, 4)
                 }
             }
             .padding(.horizontal, 28)

@@ -349,7 +349,9 @@ struct SettingsView: View {
             if let terms = CompanionConfig.termsOfUseURL {
                 Link("Terms of Use", destination: terms)
             }
-            Link("Support", destination: CompanionConfig.supportURL)
+            if let support = CompanionConfig.supportURL {
+                Link("Support", destination: support)
+            }
         }
         .alert("Delete all data?", isPresented: $confirmDeleteAccount) {
             Button("Delete everything", role: .destructive) {

@@ -52,9 +52,9 @@
 	<key>UILaunchScreen</key>
 	<dict>
 		<key>UIColorName</key>
-		<string>LaunchBackground</string>
+		<string>BrandBlue</string>
 		<key>UIImageName</key>
-		<string>LaunchLogo</string>
+		<string>BrandGift</string>
 		<key>UIImageRespectsSafeAreaInsets</key>
 		<true/>
 	</dict>
