@@ -3,6 +3,7 @@ import cors from "cors";
 import express from "express";
 import Anthropic from "@anthropic-ai/sdk";
 import sgMail from "@sendgrid/mail";
+import { welcomeEmail, signInEmail, reminderEmail } from "./emailTemplates.js";
 
 const app = express();
 app.use(cors());
@@ -89,28 +90,12 @@ app.post("/v1/email/reminder", async (req, res) => {
     return res.status(400).json({ error: "Valid email required." });
   }
 
-  const when =
-    daysUntil === 0
-      ? "today"
-      : daysUntil === 1
-        ? "tomorrow"
-        : `in ${daysUntil} days`;
-
-  const text = [
-    `Hey — ${personName}'s birthday is ${when}.`,
-    "",
-    "Open Remember My Birthday to call, draft a message, or schedule a send.",
-    req.body?.note ? `\nNote: ${String(req.body.note).slice(0, 200)}` : "",
-  ]
-    .filter(Boolean)
-    .join("\n");
+  const rawNote = req.body?.note ? String(req.body.note).slice(0, 200) : "";
+  const note = rawNote.startsWith("Manual test") ? "" : rawNote;
+  const template = reminderEmail({ personName, daysUntil, note: note || undefined });
 
   try {
-    await sendMail({
-      to: email,
-      subject: `${personName}'s birthday is ${when}`,
-      text,
-    });
+    await sendMail({ to: email, ...template });
     return res.json({ ok: true });
   } catch (err) {
     console.error("reminder email error", err?.response?.body || err);
@@ -128,16 +113,10 @@ async function sendAccountEmail(req, res, kind) {
     return res.status(400).json({ error: "Valid email required." });
   }
 
-  const isWelcome = kind === "welcome";
-  const subject = isWelcome
-    ? "Welcome to Remember My Birthday"
-    : "You’re signed in to Remember My Birthday";
-  const text = isWelcome
-    ? `Hi ${name},\n\nYou’re in. Add people once, get reminders when it matters, and draft birthday messages in one tap.\n\n— Remember My Birthday`
-    : `Hi ${name},\n\nJust confirming you’re signed in on a device. If this wasn’t you, sign out in the app Settings.\n\n— Remember My Birthday`;
+  const template = kind === "welcome" ? welcomeEmail(name) : signInEmail(name);
 
   try {
-    await sendMail({ to: email, subject, text });
+    await sendMail({ to: email, ...template });
     return res.json({ ok: true });
   } catch (err) {
     console.error("account email error", err?.response?.body || err);
@@ -145,12 +124,13 @@ async function sendAccountEmail(req, res, kind) {
   }
 }
 
-async function sendMail({ to, subject, text }) {
+async function sendMail({ to, subject, text, html }) {
   await sgMail.send({
     to,
     from: emailFrom,
     subject,
     text,
+    html,
   });
 }
 

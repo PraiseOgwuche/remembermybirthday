@@ -7,6 +7,7 @@ final class AuthManager: ObservableObject {
     @Published private(set) var isSignedIn: Bool
     @Published private(set) var userName: String?
     @Published private(set) var userIdentifier: String?
+    @Published private(set) var userEmail: String?
     @Published var hasCompletedOnboarding: Bool
     /// User-facing explanation when Sign in with Apple fails (e.g. error 1000).
     @Published var signInMessage: String?
@@ -23,10 +24,15 @@ final class AuthManager: ObservableObject {
         self.userName = defaults.string(forKey: nameKey)
         self.userIdentifier = defaults.string(forKey: idKey)
         self.hasCompletedOnboarding = defaults.bool(forKey: onboardingKey)
-        if let email = defaults.string(forKey: emailKey), !email.isEmpty,
-           AppSettingsStore.notificationEmail.isEmpty {
-            AppSettingsStore.notificationEmail = email
-        }
+        let storedEmail = defaults.string(forKey: emailKey)
+        self.userEmail = storedEmail
+        syncNotificationEmail(from: storedEmail)
+    }
+
+    var hasEmailForNotifications: Bool {
+        let value = (userEmail ?? AppSettingsStore.notificationEmail)
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+        return value.contains("@") && value.contains(".")
     }
 
     func handleSignIn(_ result: Result<ASAuthorization, Error>) {
@@ -48,23 +54,20 @@ final class AuthManager: ObservableObject {
                 }
             }
 
-            // Apple only returns email on the first authorization — stash it for notifications.
+            // Apple returns email only on the first authorization (may be a private relay).
             if let email = credential.email, !email.isEmpty {
-                defaults.set(email, forKey: emailKey)
-                AppSettingsStore.notificationEmail = email
+                saveEmail(email)
+            } else if userEmail == nil,
+                      let existing = defaults.string(forKey: emailKey), !existing.isEmpty {
+                userEmail = existing
+                syncNotificationEmail(from: existing)
             }
 
             userIdentifier = identifier
             isSignedIn = true
             signInMessage = nil
 
-            let welcomeKey = "remember.sentWelcomeEmail"
-            if !defaults.bool(forKey: welcomeKey) {
-                EmailNotifier.sendAccountEvent(.welcome, name: userName)
-                defaults.set(true, forKey: welcomeKey)
-            } else {
-                EmailNotifier.sendAccountEvent(.signIn, name: userName)
-            }
+            sendAccountEmailIfPossible()
 
         case .failure(let error):
             if let authError = error as? ASAuthorizationError {
@@ -72,7 +75,6 @@ final class AuthManager: ObservableObject {
                 case .canceled:
                     return
                 case .unknown:
-                    // Error 1000 — client setup / provisioning, not a missing backend.
                     signInMessage = """
                     Sign in with Apple isn’t fully enabled for this app yet.
 
@@ -88,6 +90,15 @@ final class AuthManager: ObservableObject {
                 signInMessage = error.localizedDescription
             }
         }
+    }
+
+    /// Manual fallback when Apple doesn’t return an email (rare after first SIWA).
+    func saveEmail(_ email: String) {
+        let trimmed = email.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard trimmed.contains("@"), trimmed.contains(".") else { return }
+        UserDefaults.standard.set(trimmed, forKey: emailKey)
+        userEmail = trimmed
+        syncNotificationEmail(from: trimmed)
     }
 
     func continueWithoutAccount() {
@@ -111,11 +122,15 @@ final class AuthManager: ObservableObject {
         defaults.set(false, forKey: onboardingKey)
         defaults.removeObject(forKey: nameKey)
         defaults.removeObject(forKey: idKey)
+        defaults.removeObject(forKey: emailKey)
+        defaults.removeObject(forKey: "remember.sentWelcomeEmail")
         isSignedIn = false
         hasCompletedOnboarding = false
         userName = nil
         userIdentifier = nil
+        userEmail = nil
         signInMessage = nil
+        AppSettingsStore.notificationEmail = ""
     }
 
     func signOut() {
@@ -123,14 +138,12 @@ final class AuthManager: ObservableObject {
         defaults.set(false, forKey: signedInKey)
         defaults.removeObject(forKey: nameKey)
         defaults.removeObject(forKey: idKey)
-        defaults.removeObject(forKey: emailKey)
+        // Keep emailKey so returning SIWA users still get reminders without re-entry.
         isSignedIn = false
         userName = nil
         userIdentifier = nil
     }
 
-    /// App Store account-deletion path: clears identity flags on this device.
-    /// Birthdays are deleted by the caller (SwiftData) before this runs.
     func deleteAccountOnDevice() {
         let defaults = UserDefaults.standard
         defaults.set(false, forKey: signedInKey)
@@ -143,7 +156,25 @@ final class AuthManager: ObservableObject {
         hasCompletedOnboarding = false
         userName = nil
         userIdentifier = nil
+        userEmail = nil
         signInMessage = nil
         AppSettingsStore.notificationEmail = ""
+    }
+
+    private func syncNotificationEmail(from email: String?) {
+        guard let email, !email.isEmpty else { return }
+        AppSettingsStore.notificationEmail = email
+    }
+
+    private func sendAccountEmailIfPossible() {
+        guard hasEmailForNotifications else { return }
+        let defaults = UserDefaults.standard
+        let welcomeKey = "remember.sentWelcomeEmail"
+        if !defaults.bool(forKey: welcomeKey) {
+            EmailNotifier.sendAccountEvent(.welcome, name: userName)
+            defaults.set(true, forKey: welcomeKey)
+        } else {
+            EmailNotifier.sendAccountEvent(.signIn, name: userName)
+        }
     }
 }

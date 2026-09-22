@@ -11,9 +11,10 @@ Ship **iPhone only** first (scheme **Remember** + widget). Skip Mac/Watch for v1
    - App Group `group.com.remembermybirthday.app`
    - Widget ID `com.remembermybirthday.app.widget`
 4. **Deploy backend** (HTTPS) — see below — then set URL in `Shared/Services/CompanionConfig.swift` → `productionBackendURL`
-5. Host **landing + privacy**:
-   - Enable GitHub Pages for this repo (`/landing` or `/docs`)
-   - Confirm URLs match `CompanionConfig.privacyPolicyURL` / `supportURL`
+5. Host **landing + privacy + terms** on `remembermybirthday.me` (see `landing/HOSTING.md`)  
+   - Privacy: https://remembermybirthday.me/privacy.html  
+   - Terms: https://remembermybirthday.me/terms.html  
+   - Support: https://remembermybirthday.me/  
 6. App Store Connect → new app:
    - Name: **Remember My Birthday**
    - Bundle ID: `com.remembermybirthday.app`

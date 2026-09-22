@@ -125,26 +125,25 @@ struct SettingsView: View {
 
     private var emailSection: some View {
         Section {
-            TextField("you@example.com", text: $notificationEmail)
-                .textContentType(.emailAddress)
-                #if os(iOS)
-                .keyboardType(.emailAddress)
-                .textInputAutocapitalization(.never)
-                #endif
-                .autocorrectionDisabled()
-                .onChange(of: notificationEmail) { _, value in
-                    AppSettingsStore.notificationEmail = value
-                }
-
-            TextField("Backend URL", text: $backendURL)
-                #if os(iOS)
-                .textInputAutocapitalization(.never)
-                .keyboardType(.URL)
-                #endif
-                .autocorrectionDisabled()
-                .onChange(of: backendURL) { _, value in
-                    AppSettingsStore.companionBackendURL = value
-                }
+            if let appleEmail = authManager.userEmail, !appleEmail.isEmpty {
+                LabeledContent("Email", value: appleEmail)
+            } else {
+                TextField("Email for reminders (optional)", text: $notificationEmail)
+                    .textContentType(.emailAddress)
+                    #if os(iOS)
+                    .keyboardType(.emailAddress)
+                    .textInputAutocapitalization(.never)
+                    #endif
+                    .autocorrectionDisabled()
+                    .onChange(of: notificationEmail) { _, value in
+                        // Keep draft text while typing; only promote to account email when valid.
+                        AppSettingsStore.notificationEmail = value.trimmingCharacters(in: .whitespacesAndNewlines)
+                        let trimmed = value.trimmingCharacters(in: .whitespacesAndNewlines)
+                        if trimmed.contains("@"), trimmed.contains(".") {
+                            authManager.saveEmail(trimmed)
+                        }
+                    }
+            }
 
             Toggle("Account emails (welcome / sign-in)", isOn: $emailAccountEvents)
                 .onChange(of: emailAccountEvents) { _, value in
@@ -154,6 +153,17 @@ struct SettingsView: View {
             Toggle("Birthday reminder emails", isOn: $emailBirthdayReminders)
                 .onChange(of: emailBirthdayReminders) { _, value in
                     AppSettingsStore.emailBirthdayReminders = value
+                }
+
+            #if DEBUG
+            TextField("Backend URL override", text: $backendURL)
+                #if os(iOS)
+                .textInputAutocapitalization(.never)
+                .keyboardType(.URL)
+                #endif
+                .autocorrectionDisabled()
+                .onChange(of: backendURL) { _, value in
+                    AppSettingsStore.companionBackendURL = value
                 }
 
             Button {
@@ -189,10 +199,15 @@ struct SettingsView: View {
                     .font(.footnote)
                     .foregroundStyle(emailTestStatus.hasPrefix("Sent") ? Color.secondary : Color.orange)
             }
+            #endif
         } header: {
             Text("Email notifications")
         } footer: {
-            Text("Emails send through your companion server (SendGrid). Backend: leave blank to use production, or set https://remember-companion.onrender.com. Continue without account never sends signup mail — use Test buttons while developing.")
+            #if DEBUG
+            Text("DEBUG: backend override + test buttons. Type a full email (with @), then tap a Test button. Apple only shares email on the first Sign in with Apple.")
+            #else
+            Text("If you signed in with Apple, we use that email automatically (including Hide My Email). Turn toggles off anytime. Push reminders still work without email.")
+            #endif
         }
     }
 
@@ -332,6 +347,10 @@ struct SettingsView: View {
             if let privacy = CompanionConfig.privacyPolicyURL {
                 Link("Privacy Policy", destination: privacy)
             }
+            if let terms = CompanionConfig.termsOfUseURL {
+                Link("Terms of Use", destination: terms)
+            }
+            Link("Support", destination: CompanionConfig.supportURL)
         }
         .alert("Delete all data?", isPresented: $confirmDeleteAccount) {
             Button("Delete everything", role: .destructive) {

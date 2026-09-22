@@ -55,7 +55,6 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "F1F62545C0CF8ABF5109B686"
             BuildableName = "RememberMyBirthday Watch.app"
-            BlueprintName = "RememberWatch"
             ReferencedContainer = "container:Remember.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -72,7 +71,6 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "F1F62545C0CF8ABF5109B686"
             BuildableName = "RememberMyBirthday Watch.app"
-            BlueprintName = "RememberWatch"
             ReferencedContainer = "container:Remember.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

@@ -77,7 +77,7 @@ struct WelcomeView: View {
                 }
                 .buttonStyle(.plain)
 
-                Text("Optional sign-in. Birthdays stay on this iPhone.")
+                Text("Sign in with Apple for welcome + reminder emails. Or continue on this iPhone only.")
                     .font(.footnote)
                     .foregroundStyle(.tertiary)
                     .multilineTextAlignment(.center)

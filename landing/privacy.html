@@ -5,45 +5,137 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Privacy Policy · Remember My Birthday</title>
   <link rel="icon" href="app-icon.png" />
+  <meta name="description" content="Privacy Policy for the Remember My Birthday iOS app." />
   <style>
     :root { --ink: #0c1b2a; --muted: #4a6070; --paper: #eef6fb; --accent: #1f6fad; }
-    body { font-family: Georgia, "Times New Roman", serif; color: var(--ink); background: var(--paper); line-height: 1.6; margin: 0; padding: 2.5rem 1.25rem 4rem; }
-    main { max-width: 40rem; margin: 0 auto; }
-    h1 { font-size: 1.85rem; margin-bottom: 0.35rem; }
-    h2 { font-size: 1.15rem; margin-top: 1.75rem; }
+    body { font-family: Georgia, "Times New Roman", serif; color: var(--ink); background: var(--paper); line-height: 1.65; margin: 0; padding: 2.5rem 1.25rem 4rem; }
+    main { max-width: 42rem; margin: 0 auto; }
+    h1 { font-size: 1.85rem; margin: 0.5rem 0 0.35rem; }
+    h2 { font-size: 1.15rem; margin-top: 1.85rem; color: var(--ink); }
     p, li { color: var(--muted); }
+    ul { padding-left: 1.25rem; }
     a { color: var(--accent); }
-    .meta { font-size: 0.9rem; color: var(--muted); margin-bottom: 1.5rem; }
+    .meta { font-size: 0.9rem; color: var(--muted); margin-bottom: 1.25rem; }
+    nav.legal { display: flex; flex-wrap: wrap; gap: 0.75rem 1.25rem; margin: 1rem 0 1.5rem; font-family: system-ui, sans-serif; font-size: 0.9rem; }
   </style>
 </head>
 <body>
   <main>
     <p><a href="index.html">← Remember My Birthday</a></p>
+    <nav class="legal" aria-label="Legal">
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms of Use</a>
+      <a href="mailto:hello@remembermybirthday.me">Contact</a>
+    </nav>
+
     <h1>Privacy Policy</h1>
-    <p class="meta">Last updated: August 27, 2026</p>
+    <p class="meta">Effective / last updated: September 22, 2026<br />
+    Operator: Remember My Birthday (“we,” “us,” or “our”)<br />
+    Contact: <a href="mailto:hello@remembermybirthday.me">hello@remembermybirthday.me</a></p>
 
-    <p>Remember My Birthday (“the App”) helps you remember birthdays and prepare messages. This policy explains what data we use and why.</p>
+    <p>This Privacy Policy describes how the <strong>Remember My Birthday</strong> mobile application (the “App”) collects, uses, stores, and shares information. It applies to the iOS App and related companion services we operate (including our email and companion API hosted on our servers).</p>
 
-    <h2>Data on your device</h2>
-    <p>Birthdays, notes, drafts, phone numbers you choose to store, and reminder preferences are saved on your device (and in your iCloud account if you turn on iCloud sync). We do not sell this data.</p>
+    <p>By using the App, you agree to this Policy. If you do not agree, do not use the App.</p>
 
-    <h2>Contacts, Calendar, Microphone, Speech</h2>
-    <p>With your permission, the App can read Contacts and Calendar to import birthdays, use the microphone and on-device speech recognition to add a birthday by voice, and schedule local notifications. These features stay under your control in iOS Settings.</p>
+    <h2>1. Summary</h2>
+    <ul>
+      <li>Birthday lists, notes, drafts, and reminder preferences are stored primarily <strong>on your device</strong>.</li>
+      <li>Optional <strong>iCloud / CloudKit</strong> sync keeps that data in your Apple iCloud account if you turn it on.</li>
+      <li>Optional <strong>Sign in with Apple</strong> stores an Apple user identifier and, when Apple provides them, your name and email on device.</li>
+      <li>Optional <strong>email notifications</strong> send your email address and limited message content to our server and email provider (SendGrid) only to deliver those emails.</li>
+      <li>Optional <strong>companion enhance</strong> may send a short per-person prompt to our server and/or use on-device language models. We do not upload your full address book.</li>
+      <li>We do <strong>not sell</strong> your personal information and we do <strong>not use your data for third-party advertising</strong>.</li>
+    </ul>
 
-    <h2>Sign in with Apple</h2>
-    <p>If you sign in with Apple, we store an opaque Apple user identifier and (when Apple provides it) your name and email on device so we can show your account and optionally send transactional email.</p>
+    <h2>2. Information we process</h2>
 
-    <h2>Email notifications</h2>
-    <p>If you enter an email and enable email notifications, that address is sent to our companion server only to deliver welcome, sign-in, or birthday reminder messages via our email provider (SendGrid). You can turn email off or clear your address in Settings.</p>
+    <h2>2.1 Information you provide or store in the App</h2>
+    <ul>
+      <li>Names, birthdays, nicknames, relationships, notes, phone numbers, message drafts, and scheduled-send times you add or edit.</li>
+      <li>Notification and email preference toggles.</li>
+      <li>An email address for transactional messages (from Sign in with Apple when available, or entered by you).</li>
+    </ul>
 
-    <h2>Companion tips</h2>
-    <p>Basic tips run on your device. If you tap Enhance, a short prompt (name, relationship, a notes snippet, days until the birthday) may be processed on-device and/or by our companion server. We do not upload your full address book. Results may be cached on device.</p>
+    <h2>2.2 Information from device permissions (only with your consent)</h2>
+    <ul>
+      <li><strong>Contacts</strong> — to import birthdays and phone numbers, match people, optionally nudge when a birthday is missing, and optionally write a birthday back to a contact card.</li>
+      <li><strong>Calendar</strong> — to read birthday-related events for import.</li>
+      <li><strong>Microphone &amp; Speech Recognition</strong> — to add a birthday by voice (processed under Apple’s on-device / system speech frameworks as configured by iOS).</li>
+      <li><strong>Notifications</strong> — to schedule local birthday and send reminders on your device.</li>
+      <li><strong>Reminders</strong> (if you grant access) — to create related system reminders where offered.</li>
+    </ul>
+    <p>You can revoke permissions in iOS Settings. Revoking may disable related features but does not automatically delete data already saved in the App.</p>
 
-    <h2>Account deletion</h2>
-    <p>In Settings → Account, choose “Delete account &amp; data on this device” to remove birthdays and sign-in data from that iPhone.</p>
+    <h2>2.3 Sign in with Apple</h2>
+    <p>If you use Sign in with Apple, Apple may provide us (on device) an opaque user identifier and, on first authorization, your name and/or email (including a private relay address if you choose Hide My Email). We use this to identify your session on device and to send optional account emails. We do not receive your Apple password.</p>
 
-    <h2>Contact</h2>
-    <p>Questions: open an issue on <a href="https://github.com/PraiseOgwuche/remembermybirthday">GitHub</a> or use the support URL listed on the App Store listing.</p>
+    <h2>2.4 Automatically processed technical data on our servers</h2>
+    <p>When the App calls our companion backend (for email or enhance), our hosting provider may process standard server logs (e.g. IP address, timestamps, request path, coarse device/user agent). We use this for security, reliability, and abuse prevention—not for advertising profiles.</p>
+
+    <h2>3. How we use information</h2>
+    <ul>
+      <li>Provide core App features: birthday list, reminders, drafts, messaging deep links, widgets, and settings.</li>
+      <li>Send optional transactional emails (welcome, sign-in confirmation, birthday reminders).</li>
+      <li>Generate optional companion tips/drafts/gift ideas when you explicitly request enhance.</li>
+      <li>Maintain security, debug failures, and comply with law.</li>
+    </ul>
+    <p>We do not use Contacts, Calendar, or birthday content to train public AI models for unrelated purposes.</p>
+
+    <h2>4. Legal bases (where applicable, e.g. EEA/UK)</h2>
+    <p>Where required, we process data based on: (a) performance of the contract to provide the App; (b) your consent (permissions and optional email/enhance); (c) legitimate interests in securing and improving the service; and (d) legal obligations.</p>
+
+    <h2>5. Sharing and processors</h2>
+    <p>We share information only as needed to operate the App:</p>
+    <ul>
+      <li><strong>Apple</strong> — Sign in with Apple, CloudKit/iCloud (if enabled), push/local notification delivery frameworks, on-device speech/language features.</li>
+      <li><strong>SendGrid (Twilio)</strong> — transactional email delivery when email features are enabled.</li>
+      <li><strong>Hosting (e.g. Render)</strong> — runs our companion API.</li>
+      <li><strong>Model provider for companion enhance</strong> — when enhance uses our server path, a short prompt may be sent to our configured model provider to generate the response. Prompts include only the limited fields needed for that tap (e.g. display name, relationship, short notes snippet, days until birthday)—not your full contact list.</li>
+    </ul>
+    <p>We may disclose information if required by law, valid legal process, or to protect rights, safety, and integrity of users or the service.</p>
+    <p>We do not sell personal information. We do not share personal information for cross-context behavioral advertising.</p>
+
+    <h2>6. Retention</h2>
+    <ul>
+      <li><strong>On device / iCloud:</strong> retained until you delete people, delete account/data in Settings, or remove the App (and, for iCloud, until you clear CloudKit data / turn off sync per Apple’s tools).</li>
+      <li><strong>Email:</strong> SendGrid and our servers may retain message metadata/logs for a limited period for delivery, abuse prevention, and legal compliance.</li>
+      <li><strong>Companion enhance:</strong> responses may be cached on device for a limited time to reduce repeat calls; server logs are retained only as needed for operations.</li>
+    </ul>
+
+    <h2>7. Security</h2>
+    <p>We use reasonable administrative and technical measures (including HTTPS for server calls and platform Keychain/storage protections where applicable). No method of transmission or storage is 100% secure.</p>
+
+    <h2>8. Children’s privacy</h2>
+    <p>The App is not directed to children under 13 (or the minimum age required in your region). We do not knowingly collect personal information from children under that age. If you believe a child provided personal information, contact us and we will take appropriate steps to delete it.</p>
+
+    <h2>9. International transfers</h2>
+    <p>Our processors may process data in the United States or other countries. Where required, we rely on appropriate transfer mechanisms provided by those processors.</p>
+
+    <h2>10. Your choices and rights</h2>
+    <ul>
+      <li>Toggle email notification categories in App Settings.</li>
+      <li>Use <strong>Delete account &amp; data on this device</strong> in Settings to remove local birthday data and sign-in flags on that device.</li>
+      <li>Revoke Sign in with Apple in iOS Settings → Apple ID → Sign in with Apple.</li>
+      <li>Revoke Contacts/Calendar/Mic/Speech/Notifications in iOS Settings.</li>
+      <li>Depending on your location, you may have rights to access, correct, delete, or restrict processing of personal data, and to withdraw consent. Contact <a href="mailto:hello@remembermybirthday.me">hello@remembermybirthday.me</a>. You may also contact your local data protection authority.</li>
+    </ul>
+    <p>Because most birthday data lives on your device or in your iCloud account, the fastest way to delete App content is usually through the in-App delete control and/or deleting the App / managing iCloud data.</p>
+
+    <h2>11. California / US state disclosures (summary)</h2>
+    <p>We collect identifiers (e.g. email, Apple user id), customer records-type info you enter (names, phone numbers), and inferences only as generated for in-App tips you request. We do not sell personal information or share it for cross-context behavioral advertising. Categories are used for App functionality as described above. To request deletion or know more, email <a href="mailto:hello@remembermybirthday.me">hello@remembermybirthday.me</a>.</p>
+
+    <h2>12. Third-party services and links</h2>
+    <p>The App may open Apple Messages or system Settings. Those services are governed by Apple’s policies. Our website may link to third parties; their practices are their own.</p>
+
+    <h2>13. Changes</h2>
+    <p>We may update this Policy. We will revise the “last updated” date above and, for material changes, provide additional notice in the App or on our site where appropriate. Continued use after changes means you accept the updated Policy.</p>
+
+    <h2>14. Contact</h2>
+    <p>Questions about privacy:<br />
+    Email: <a href="mailto:hello@remembermybirthday.me">hello@remembermybirthday.me</a><br />
+    Web: <a href="index.html">remembermybirthday.me</a> (or the support URL listed on the App Store)</p>
+
+    <p class="meta" style="margin-top:2rem">Also see our <a href="terms.html">Terms of Use</a>.</p>
   </main>
 </body>
 </html>
