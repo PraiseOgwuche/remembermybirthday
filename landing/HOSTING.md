@@ -4,13 +4,16 @@ App Store Connect needs live URLs. Point **remembermybirthday.me** at the `landi
 
 ## Option A — Cloudflare Pages (fits your DNS)
 
-1. Cloudflare dashboard → **Workers & Pages** → **Create** → **Pages**
-2. Connect the GitHub repo `PraiseOgwuche/remembermybirthday`
-3. Build settings:
-   - Framework preset: **None**
-   - Build command: leave empty
-   - Build output directory: `landing`
-4. After deploy, **Custom domains** → add `remembermybirthday.me` and `www.remembermybirthday.me`
+Cloudflare’s Git UI may say “Worker project” — that’s normal in the new dashboard.
+
+1. **Workers & Pages** → **Create application** → connect GitHub → `remembermybirthday`
+2. On **Set up your application**:
+   - **Project name:** `remembermybirthday`
+   - **Build command:** leave **empty**
+   - **Deploy command:** `npx wrangler pages deploy landing`  
+     (or keep `npx wrangler deploy` if `wrangler.toml` is on `main` with `pages_build_output_dir = "landing"`)
+3. **Deploy**
+4. Project → **Custom domains** → add `remembermybirthday.me` (and `www` if you want)
 5. Confirm:
    - https://remembermybirthday.me/privacy.html
    - https://remembermybirthday.me/terms.html
