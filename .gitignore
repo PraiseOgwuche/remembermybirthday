@@ -10,3 +10,4 @@ xcuserdata/
 backend/.env
 backend/node_modules/
 **/.env.local
+.wrangler/
